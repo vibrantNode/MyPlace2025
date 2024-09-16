@@ -1,5 +1,5 @@
 #pragma once
-
+#include "GLFW/glfw3.h"
 #include <vector>
 
 
@@ -11,7 +11,7 @@ public:
     void Bind() const;
     void Unbind() const;
 
-    //int GetIndexCount() const { return m_Indices.size(); }
+    int GetIndexCount() const { return m_Indices.size(); }
 
 private:
     GLuint m_VAO, m_VBO, m_EBO;

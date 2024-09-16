@@ -1,3 +1,4 @@
+#include "glad/glad.h"
 #include "GLFW/glfw3.h"
 #include "Window.h"
 #include <iostream>
@@ -26,6 +27,12 @@ Window::Window(const char* title, int width, int height)
 
     // Make the OpenGL context current
     glfwMakeContextCurrent(m_Window);
+
+    // Load GLAD
+    if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
+        std::cerr << "Failed to initialize GLAD" << std::endl;
+        return;
+    }
 
     // Set the viewport (default to full window size)
     glViewport(0, 0, m_Width, m_Height);

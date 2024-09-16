@@ -1,11 +1,11 @@
-
+#include "glad/glad.h"
 #include "GLFW/glfw3.h"
 #include <vector>
 #include <map>
 #include "OpenGL/GLError.h"
 #include "Renderer/Renderer.h"
-//#include "Renderer/Types/Mesh.hpp"
-//#include "Shader/Shader.h"
+#include "Renderer/Types/Mesh.hpp"
+#include "Shader/Shader.h"
 
 Renderer::Renderer()
 {
@@ -26,19 +26,19 @@ void Renderer::Clear() const
 }
 
 
-/*
+
 void Renderer::Draw(const Mesh& mesh, const Shader& shader) const
 {
     GLCheckError();  // Error check before draw call
 
     // Bind the shader program
-    //shader.Bind();
+    shader.Bind();
 
     // Bind the mesh (vertex array object)
-    //mesh.Bind();
+    mesh.Bind();
 
     // Draw the mesh using glDrawElements (assumes the mesh is set up for indexed drawing)
-    //glDrawElements(GL_TRIANGLES, mesh.GetIndexCount(), GL_UNSIGNED_INT, nullptr);
+    glDrawElements(GL_TRIANGLES, mesh.GetIndexCount(), GL_UNSIGNED_INT, nullptr);
 
     // Unbind the mesh and shader for good practice
     //mesh.Unbind();
@@ -46,4 +46,4 @@ void Renderer::Draw(const Mesh& mesh, const Shader& shader) const
 
     GLCheckError();  // Error check after draw call
 }
-*/
+

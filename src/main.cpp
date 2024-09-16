@@ -7,7 +7,7 @@ extern "C" {
     __declspec(dllexport) unsigned __int32 NvOptimusEnablement = 0x1;
 }
 
-
+#include "glad/glad.h"
 #include "GLFW/glfw3.h"
 #include "Engine.h"
 
@@ -20,10 +20,6 @@ int main()
 
     std::cout << "Welcome to my sanctuary.\n" << std::endl;
     
-    if (!glfwInit()) {
-        std::cout << "Failture";
-    }
-
 
     Engine engine;
     engine.Run();

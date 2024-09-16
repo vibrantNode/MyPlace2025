@@ -1,8 +1,8 @@
-
-#include "GLFW/glfw3.h"  // Include GLFW after GLAD
+#include "glad/glad.h"
+#include "GLFW/glfw3.h"  
 #include "Mesh.hpp"
 #include <iostream>
-/*
+
 
 Mesh::Mesh(const std::vector<float>& vertices, const std::vector<unsigned int>& indices)
     : m_Vertices(vertices), m_Indices(indices) {
@@ -53,4 +53,3 @@ void Mesh::Unbind() const {
     // Unbind the VAO
     glBindVertexArray(0);
 }
-*/

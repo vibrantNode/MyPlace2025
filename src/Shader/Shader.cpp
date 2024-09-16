@@ -1,5 +1,5 @@
 
-/*
+#include "glad/glad.h"
 #include "Shader/Shader.h"
 #include <fstream>
 #include <sstream>
@@ -104,4 +104,3 @@ void Shader::LinkShaders(GLuint vertexShader, GLuint fragmentShader)
     }
 }
 
-*/

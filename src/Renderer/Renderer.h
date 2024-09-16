@@ -1,6 +1,6 @@
 #pragma once
-//#include "Types/Mesh.hpp"
-//#include "Shader/shader.h"
+#include "Types/Mesh.hpp"
+#include "Shader/shader.h"
 #include "GLFW/glfw3.h"
 #include <memory>
 
@@ -11,5 +11,5 @@ public:
     ~Renderer();
 
     void Clear() const;
-   // void Draw(const Mesh& mesh, const Shader& shader) const;
+    void Draw(const Mesh& mesh, const Shader& shader) const;
 };
