@@ -19,7 +19,6 @@ int main()
 {
 
     std::cout << "Welcome to my sanctuary.\n" << std::endl;
-    
 
     Engine engine;
     engine.Run();

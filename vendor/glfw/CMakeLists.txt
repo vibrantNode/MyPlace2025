@@ -3,6 +3,7 @@ cmake_minimum_required(VERSION "3.13")
 project(GLFW VERSION 3.5.0 LANGUAGES C)
 
 if (POLICY CMP0069)
+
     cmake_policy(SET CMP0069 NEW)
 endif()
 

@@ -37,12 +37,10 @@ void Renderer::Draw(const Mesh& mesh, const Shader& shader) const
     // Bind the mesh (vertex array object)
     mesh.Bind();
 
-    // Draw the mesh using glDrawElements (assumes the mesh is set up for indexed drawing)
+    // Draw the mesh with an index offset
     glDrawElements(GL_TRIANGLES, mesh.GetIndexCount(), GL_UNSIGNED_INT, nullptr);
 
     // Unbind the mesh and shader for good practice
-    //mesh.Unbind();
-    //shader.Unbind();
 
     GLCheckError();  // Error check after draw call
 }

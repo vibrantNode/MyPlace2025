@@ -3,9 +3,9 @@
 
 class Input {
 public:
-    //static bool IsKeyPressed(int key);
-    //static bool IsMouseButtonPressed(int button);
-    //static void GetMousePosition(double& x, double& y);
+    static bool IsKeyPressed(int key);
+    static bool IsMouseButtonPressed(int button);
+    static void GetMousePosition(double& x, double& y);
 
     static void SetGLFWWindow(GLFWwindow* window);
 

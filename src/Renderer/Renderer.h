@@ -11,5 +11,7 @@ public:
     ~Renderer();
 
     void Clear() const;
+
     void Draw(const Mesh& mesh, const Shader& shader) const;
+
 };

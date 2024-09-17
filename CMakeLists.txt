@@ -16,6 +16,8 @@ add_library(glad STATIC vendor/glad/src/glad.c)
 target_include_directories(glad PUBLIC vendor/glad/include)
 
 
+
+
 add_executable(MyHell2024 
 	src/main.cpp
 	src/Engine.cpp
@@ -24,8 +26,12 @@ add_executable(MyHell2024
 	src/Renderer/Renderer.cpp 
 	src/Shader/Shader.cpp
 	src/Renderer/Types/Mesh.cpp
+	src/Core/Camera.cpp
+	src/Game/Game.cpp 
+	src/Game/Scene.cpp
  "vendor/glad/include/glad/glad.h" "vendor/glad/include/KHR/khrplatform.h" "vendor/glad/src/glad.c")
 
+target_include_directories(MyHell2024 PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/vendor/glm")
 
 target_include_directories(MyHell2024 PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/src")
 target_include_directories(MyHell2024 PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/src/Core")

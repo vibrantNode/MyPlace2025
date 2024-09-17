@@ -1,4 +1,6 @@
-
+#include "glm/glm.hpp"
+#include "glm/gtc/matrix_transform.hpp"
+#include "glm/gtc/type_ptr.hpp"
 #include "glad/glad.h"
 #include "Shader/Shader.h"
 #include <fstream>
@@ -40,6 +42,16 @@ void Shader::Unbind() const
 {
     glUseProgram(0);
 }
+
+void Shader::SetUniformMat4f(const std::string& name, const glm::mat4& matrix) const {
+    GLint location = glGetUniformLocation(m_ProgramID, name.c_str());
+    if (location == -1) {
+        std::cerr << "Uniform " << name << " not found!" << std::endl;
+        return;
+    }
+    glUniformMatrix4fv(location, 1, GL_FALSE, glm::value_ptr(matrix));
+}
+
 
 // Read shader source code from file
 std::string Shader::ParseShader(const std::string& filePath)
@@ -103,4 +115,3 @@ void Shader::LinkShaders(GLuint vertexShader, GLuint fragmentShader)
         std::cerr << "Program linking failed:\n" << log << std::endl;
     }
 }
-
