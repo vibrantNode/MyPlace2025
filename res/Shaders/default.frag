@@ -1,11 +1,14 @@
+
 #version 330 core
 
-out vec4 FragColor;     // Final output color
+in vec3 ourColor;       // Color passed from the vertex shader
+in vec2 TexCoords;      // Texture coordinates passed from the vertex shader
 
-in vec3 ourColor;       // Color from the vertex shader
-in vec2 TexCoords;      // Texture coordinates (if you want to use textures later)
+out vec4 FragColor;     // Output color
+
+uniform sampler2D texture1;  // The texture sampler
 
 void main() {
-    // Set the fragment color based on the interpolated vertex color
-    FragColor = vec4(ourColor, 1.0);
+    // Sample the texture color and multiply it by the input color
+    FragColor = texture(texture1, TexCoords) * vec4(ourColor, 1.0);
 }

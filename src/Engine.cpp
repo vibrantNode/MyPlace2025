@@ -18,12 +18,6 @@
 // Engine init 
 Engine::Engine()
     :m_Running(true) {
-
-    // Enable depth testing
-    //glEnable(GL_DEPTH_TEST);
-
-    // You can also specify the depth function here if needed
-    //glDepthFunc(GL_LESS);
    
     // Initialize the GLFW window
     m_Window = std::make_unique<Window>("My Universe", 1920, 1080);

@@ -1,4 +1,4 @@
-/*
+
 #pragma once  // Or use the traditional include guards below
 
 #include <string>

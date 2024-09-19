@@ -28,5 +28,5 @@ private:
     std::unique_ptr<Shader> m_Shader;
     std::unique_ptr<Mesh> m_BoxMesh;
     std::unique_ptr<Mesh> m_PlaneMesh;
-   // std::unique_ptr<Texture> m_PlaneTexture; 
+    std::unique_ptr<Texture> m_PlaneTexture; 
 };

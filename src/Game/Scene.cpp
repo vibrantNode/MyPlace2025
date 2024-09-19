@@ -18,7 +18,7 @@ void Scene::Init() {
     );
     // Load textures
     //m_BoxTexture = std::make_unique<Texture>("D:/Users/Admin/source/repos/MyHell2024/MyHell2024/res/Textures/AlienWall2.png");
-    //m_PlaneTexture = std::make_unique<Texture>("path/to/plane_texture.png");
+    m_PlaneTexture = std::make_unique<Texture>("D:/Users/Admin/source/repos/MyHell2024/MyHell2024/res/Textures/AlienWall2.png");
     
 }
 
@@ -45,11 +45,12 @@ void Scene::Render(Renderer& renderer, Camera& camera) {
     planeModel = glm::scale(planeModel, glm::vec3(10.0f, 1.0f, 10.0f)); // Scale
 
     // Render Box Mesh
-   // m_BoxTexture->Bind();
     m_Shader->SetUniformMat4f("model", boxModel);
     renderer.Draw({ m_BoxMesh.get() }, *m_Shader); // Drawing the box
 
     // Render Plane Mesh
+    m_PlaneTexture->Bind();
+
     m_Shader->SetUniformMat4f("model", planeModel);
     renderer.Draw({ m_PlaneMesh.get() }, *m_Shader); // Drawing the plane
 }
@@ -133,7 +134,7 @@ Scene::Scene() : m_Shader(nullptr) {
     unsigned int boxIndexOffset = 0;         // The box indices start at the beginning
     unsigned int boxIndexCount = 36;         // Number of indices for the box
 
-    // Each vertex has 8 floats (3 for position, 3 for color, 2 for texture coordinates)
+    // Each vertex now has 8 floats (3 for position, 3 for color, 2 for texture coordinates)
     unsigned int planeVertexOffset = 24 * 8; // Offset after box vertices (24 vertices * 8 floats per vertex)
     unsigned int planeIndexOffset = 36;      // Offset after the box indices
     unsigned int planeIndexCount = 6;
