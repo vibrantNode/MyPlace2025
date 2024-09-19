@@ -29,10 +29,10 @@ private:
 	std::unique_ptr<Camera> m_Camera;
 	
 	
-
 	bool m_Running;
-	
 
+	bool m_WireframeMode = false;
+	
 	Game m_Game;  // Game object that manages the scenes
 
 	// Variables for mouse handling

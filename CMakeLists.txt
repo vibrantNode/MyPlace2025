@@ -29,10 +29,11 @@ add_executable(MyHell2024
 	src/Core/Camera.cpp
 	src/Game/Game.cpp 
 	src/Game/Scene.cpp
+	src/Renderer/Types/Texture.cpp
  "vendor/glad/include/glad/glad.h" "vendor/glad/include/KHR/khrplatform.h" "vendor/glad/src/glad.c")
 
 target_include_directories(MyHell2024 PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/vendor/glm")
-
+target_include_directories(MyHell2024 PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/vendor/stb")
 target_include_directories(MyHell2024 PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/src")
 target_include_directories(MyHell2024 PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/src/Core")
 target_include_directories(MyHell2024 PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/src/Renderer")

@@ -22,3 +22,5 @@ void Game::Render(Renderer& renderer, Camera& camera) {
         currentScene->Render(renderer, camera);  // Call the scene's render function
     }
 }
+
+

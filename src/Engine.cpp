@@ -1,3 +1,4 @@
+#include "glad/glad.h"
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
@@ -17,14 +18,21 @@
 // Engine init 
 Engine::Engine()
     :m_Running(true) {
+
+    // Enable depth testing
+    //glEnable(GL_DEPTH_TEST);
+
+    // You can also specify the depth function here if needed
+    //glDepthFunc(GL_LESS);
    
     // Initialize the GLFW window
-    m_Window = std::make_unique<Window>("My Universe", 1280, 720);
+    m_Window = std::make_unique<Window>("My Universe", 1920, 1080);
+
     // Initialize the Renderer
     m_Renderer = std::make_unique<Renderer>();
+
     // Initialize camera at some default position and orientation
     m_Camera = std::make_unique<Camera>(glm::vec3(0.0f, 0.0f, 3.0f), -90.0f, 0.0f);
-
 
     // Set the window for input management
     Input::SetGLFWWindow(m_Window->GetGLFWWindow());//------------------- **
@@ -34,15 +42,7 @@ Engine::Engine()
     glfwSetCursorPosCallback(m_Window->GetGLFWWindow(), MouseCallback);
     glfwSetInputMode(m_Window->GetGLFWWindow(), GLFW_CURSOR, GLFW_CURSOR_DISABLED);  // Hide cursor
 
-    // Initialize Meshes and shaders
-
-
-    // Define a fixed rotation to make the rectangle a plane and scale it
-    // glm::mat4 rotation = glm::rotate(glm::mat4(1.0f), glm::radians(90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
-    //glm::mat4 scale = glm::scale(glm::mat4(1.0f), glm::vec3(3.0f, 3.0f, 3.0f)); // Scale by 5
-    //m_FixedRotation = scale * rotation; // Apply scaling after rotation
-
-
+    // Initialize the game
     m_Game.Init();
 }
 
@@ -59,13 +59,24 @@ void Engine::Run() {
     float lastFrame = 0.0f;
     float angle = 0.0f;  // Rotation angle
 
+
+
     // Main loop
     while (m_Running && !m_Window->ShouldClose()) {
+        // Frame Logic
         float currentFrame = glfwGetTime();
         float deltaTime = currentFrame - lastFrame;
         lastFrame = currentFrame;
 
         ProcessInput(deltaTime);
+
+        // Toggle wireframe mode
+        if (m_WireframeMode) {
+            glPolygonMode(GL_FRONT_AND_BACK, GL_LINE); // Enable wireframe mode
+        }
+        else {
+            glPolygonMode(GL_FRONT_AND_BACK, GL_FILL); // Enable solid mode
+        }
 
         // Clear the screen
         m_Renderer->Clear();
@@ -81,7 +92,7 @@ void Engine::Run() {
 }
 
 
-
+// Keyboard event listeners
 void Engine::ProcessInput(float deltaTime) {
     if (Input::IsKeyPressed(GLFW_KEY_W))
         m_Camera->ProcessKeyboardInput(FORWARD, deltaTime);
@@ -93,9 +104,18 @@ void Engine::ProcessInput(float deltaTime) {
         m_Camera->ProcessKeyboardInput(RIGHT, deltaTime);
     if (Input::IsKeyPressed(GLFW_KEY_ESCAPE))
         m_Running = false;
+    if (Input::IsKeyPressed(GLFW_KEY_4))
+        m_WireframeMode = !m_WireframeMode;
+    if (Input::IsKeyPressed(GLFW_KEY_5)) {
+        //ToggleFullscreen();
+    }
+   
+       
 }
 
-// Mouse callback function definition
+
+
+// Mouse event listeners
 void Engine::MouseCallback(GLFWwindow* window, double xpos, double ypos) {
     Engine* engine = static_cast<Engine*>(glfwGetWindowUserPointer(window));
 

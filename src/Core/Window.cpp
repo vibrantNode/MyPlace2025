@@ -18,7 +18,7 @@ Window::Window(const char* title, int width, int height)
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);  // Use core profile
 
     // Create the GLFW window
-    m_Window = glfwCreateWindow(m_Width, m_Height, title, nullptr, nullptr);
+    m_Window = glfwCreateWindow(m_Width, m_Height, title, NULL, nullptr);
     if (!m_Window) {
         std::cerr << "Failed to create GLFW window!" << std::endl;
         glfwTerminate();

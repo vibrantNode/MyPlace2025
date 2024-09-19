@@ -12,6 +12,6 @@ public:
 
     void Clear() const;
 
-    void Draw(const Mesh& mesh, const Shader& shader) const;
+    void Renderer::Draw(const std::vector<Mesh*>& meshes, const Shader& shader) const;
 
 };

@@ -13,3 +13,15 @@ Instancing: If you have multiple instances of the same mesh, you can use instanc
 Batching: Group objects that share the same shaders and materials to minimize state changes, and render them in batches for optimal performance.
 Performance Gains
 By minimizing the number of VAOs, VBOs, and draw calls, you can achieve significant performance improvements, especially when rendering complex scenes with multiple objects.
+
+
+
+
+
+
+
+
+
+#Dev day 4 log
+
+Make sure to figure out how to store everything in one vao/ buffer and draw it in one draw call.

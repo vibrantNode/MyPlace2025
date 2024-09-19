@@ -9,6 +9,11 @@
 
 Renderer::Renderer()
 {
+    // Enable depth testing
+    glEnable(GL_DEPTH_TEST);
+
+    // Set depth function (optional)
+    glDepthFunc(GL_LESS);
 }
 
 Renderer::~Renderer()
@@ -17,7 +22,7 @@ Renderer::~Renderer()
 
 void Renderer::Clear() const
 {
-   
+
     // Clear the screen (color buffer) and optionally the depth buffer
     GLCheckError();  // Checks for any OpenGL errors before execution
     glClearColor(0.1f, 3.1f, 3.1f, 3.3f);
@@ -27,21 +32,15 @@ void Renderer::Clear() const
 
 
 
-void Renderer::Draw(const Mesh& mesh, const Shader& shader) const
-{
+void Renderer::Draw(const std::vector<Mesh*>& meshes, const Shader& shader) const {
     GLCheckError();  // Error check before draw call
 
-    // Bind the shader program
     shader.Bind();
 
-    // Bind the mesh (vertex array object)
-    mesh.Bind();
-
-    // Draw the mesh with an index offset
-    glDrawElements(GL_TRIANGLES, mesh.GetIndexCount(), GL_UNSIGNED_INT, nullptr);
-
-    // Unbind the mesh and shader for good practice
+    for (const Mesh* mesh : meshes) {
+        mesh->Bind();
+        glDrawElements(GL_TRIANGLES, mesh->GetIndexCount(), GL_UNSIGNED_INT, (void*)(mesh->GetIndexOffset() * sizeof(unsigned int)));
+    }
 
     GLCheckError();  // Error check after draw call
 }
-
