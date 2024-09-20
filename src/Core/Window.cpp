@@ -13,9 +13,10 @@ Window::Window(const char* title, int width, int height)
     }
 
     // Set GLFW options (version, profile, etc.)
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);  // OpenGL 3.x
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);  // OpenGL 3.3
-    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);  // Use core profile
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 6);
+    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+    glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, true);
 
     // Create the GLFW window
     m_Window = glfwCreateWindow(m_Width, m_Height, title, NULL, nullptr);
@@ -48,8 +49,8 @@ Window::Window(const char* title, int width, int height)
     std::cout << "Window created successfully!" << std::endl;
 
     // Retrieve the OpenGL version
-    //const GLubyte* version = glGetString(GL_VERSION);
-    //std::cout << "OpenGL Version: " << version << std::endl;
+    const GLubyte* version = glGetString(GL_VERSION);
+    std::cout << "OpenGL Version: " << version << std::endl;
 }
 
 Window::~Window() {

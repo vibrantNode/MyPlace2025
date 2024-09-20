@@ -1,13 +1,13 @@
 #include "Game.h"
-#include "Scene.h"
+#include "RenderData.h"
 
 Game::Game() : currentScene(nullptr) {}
 
 Game::~Game() {}
 
 void Game::Init() {
-    // Create and initialize the first scene
-    currentScene = std::make_unique<Scene>();
+    // Create and initialize the first scene  *** EVENTUALLY ADD ACTUAL SCENE CLASS TO MANAGE MULTIPLE UNIQUE RENDER DATA IE SCENE DATA
+    currentScene = std::make_unique<RenderData>();
     currentScene->Init();  // Initialize scene-specific assets like shaders, meshes, etc.
 }
 

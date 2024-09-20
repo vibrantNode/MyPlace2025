@@ -51,9 +51,6 @@ void Engine::Run() {
 
 
     float lastFrame = 0.0f;
-    float angle = 0.0f;  // Rotation angle
-
-
 
     // Main loop
     while (m_Running && !m_Window->ShouldClose()) {
@@ -100,11 +97,6 @@ void Engine::ProcessInput(float deltaTime) {
         m_Running = false;
     if (Input::IsKeyPressed(GLFW_KEY_4))
         m_WireframeMode = !m_WireframeMode;
-    if (Input::IsKeyPressed(GLFW_KEY_5)) {
-        //ToggleFullscreen();
-    }
-   
-       
 }
 
 

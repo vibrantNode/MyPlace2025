@@ -25,7 +25,7 @@ void Renderer::Clear() const
 
     // Clear the screen (color buffer) and optionally the depth buffer
     GLCheckError();  // Checks for any OpenGL errors before execution
-    glClearColor(0.1f, 3.1f, 3.1f, 3.3f);
+    glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     GLCheckError();  // Checks for any OpenGL errors after execution
 }
@@ -41,6 +41,7 @@ void Renderer::Draw(const std::vector<Mesh*>& meshes, const Shader& shader) cons
         mesh->Bind();
         glDrawElements(GL_TRIANGLES, mesh->GetIndexCount(), GL_UNSIGNED_INT, (void*)(mesh->GetIndexOffset() * sizeof(unsigned int)));
     }
+
 
     GLCheckError();  // Error check after draw call
 }

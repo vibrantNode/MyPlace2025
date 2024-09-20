@@ -20,4 +20,5 @@ private:
     unsigned int m_VAO, m_VBO, m_EBO;
     unsigned int m_IndexOffset;
     unsigned int m_IndexCount;
+    unsigned int m_VertexOffset;
 };

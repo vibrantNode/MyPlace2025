@@ -1,5 +1,5 @@
 #pragma once
-#include "Scene.h"
+#include "RenderData.h"
 #include <memory>
 
 class Game {
@@ -12,5 +12,5 @@ public:
     void Render(Renderer& renderer, Camera& camera);
 
 private:
-    std::unique_ptr<Scene> currentScene;
+    std::unique_ptr<RenderData> currentScene;
 };
