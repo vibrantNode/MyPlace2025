@@ -29,7 +29,7 @@ add_executable(MyHell2024
 	"src/Renderer/RenderData.cpp"
 	src/Renderer/Types/Texture.cpp
 	src/Renderer/Types/CubeMap.cpp
- "vendor/glad/include/glad/glad.h" "vendor/glad/include/KHR/khrplatform.h" "vendor/glad/src/glad.c")
+ "vendor/glad/src/glad.c")
 
 target_include_directories(MyHell2024 PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/vendor/glm")
 target_include_directories(MyHell2024 PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/vendor/stb")

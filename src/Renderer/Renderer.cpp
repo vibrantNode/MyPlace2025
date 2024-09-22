@@ -40,7 +40,9 @@ void Renderer::Draw(const std::vector<Mesh*>& meshes, const Shader& shader) cons
     for (const Mesh* mesh : meshes) {
         mesh->Bind();
         glDrawElements(GL_TRIANGLES, mesh->GetIndexCount(), GL_UNSIGNED_INT, (void*)(mesh->GetIndexOffset() * sizeof(unsigned int)));
+        
     }
+    
 
 
     GLCheckError();  // Error check after draw call

@@ -94,15 +94,7 @@ RenderData::RenderData() : m_Shader(nullptr) {
 }
 
 
-/*// Offsets and counts
-unsigned int boxVertexOffset = 0;        // The box vertices start at the beginning of the array
-unsigned int boxIndexOffset = 0;         // The box indices start at the beginning
-unsigned int boxIndexCount = 36;         // Number of indices for the box
 
-// Each vertex now has 8 floats (3 for position, 3 for color, 2 for texture coordinates)
-unsigned int planeVertexOffset = 24 * 8; // Offset after box vertices (24 vertices * 8 floats per vertex)
-unsigned int planeIndexOffset = 36;      // Offset after the box indices
-unsigned int planeIndexCount = 6;*/
 
 
 RenderData::~RenderData() {}

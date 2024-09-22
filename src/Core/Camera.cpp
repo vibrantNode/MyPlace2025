@@ -6,7 +6,7 @@
 // Constructor
 Camera::Camera(glm::vec3 position, float yaw, float pitch)
     : m_Position(position), m_Yaw(yaw), m_Pitch(pitch), m_Front(glm::vec3(0.0f, 0.0f, -1.0f)),
-    m_WorldUp(glm::vec3(0.0f, 1.0f, 0.0f)), m_Zoom(95.0f), m_MovementSpeed(10.5f) {  // Added m_MovementSpeed
+    m_WorldUp(glm::vec3(0.0f, 1.0f, 0.0f)), m_Zoom(75.0f), m_MovementSpeed(10.5f) {  // Added m_MovementSpeed
     UpdateCameraVectors();
 }
 
@@ -15,7 +15,7 @@ void Camera::ProcessMouseMovement(float xoffset, float yoffset, bool constrainPi
     const float sensitivity = 0.1f;  // Adjust this value to your liking
     xoffset *= sensitivity;
     yoffset *= sensitivity;
-
+    
     m_Yaw += xoffset;
     m_Pitch += yoffset;
 

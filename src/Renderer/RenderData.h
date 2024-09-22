@@ -29,6 +29,7 @@ private:
     std::unique_ptr<Shader> m_LightingShader;
     std::unique_ptr<Shader> m_LightSourceShader;
 
+
     // Textures
     std::unique_ptr<Texture> m_PlaneTexture;
     std::unique_ptr<Texture> m_BoxTexture;
