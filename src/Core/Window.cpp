@@ -25,6 +25,7 @@ Window::Window(const char* title, int width, int height)
         glfwTerminate();
         exit(EXIT_FAILURE);
     }
+    std::cout << "Window created successfully!" << std::endl;
 
     // Make the OpenGL context current
     glfwMakeContextCurrent(m_Window);
@@ -46,7 +47,7 @@ Window::Window(const char* title, int width, int height)
         glViewport(0, 0, width, height);  // Update the OpenGL viewport to new window size
         });
 
-    std::cout << "Window created successfully!" << std::endl;
+    
 
     // Retrieve the OpenGL version
     const GLubyte* version = glGetString(GL_VERSION);

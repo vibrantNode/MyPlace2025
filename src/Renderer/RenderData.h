@@ -39,4 +39,9 @@ private:
     // Meshes
     std::unique_ptr<Mesh> m_BoxMesh;
     std::unique_ptr<Mesh> m_PlaneMesh;
+
+
+    //Instances
+    int m_PlaneInstanceCount = 50;
+    int m_BoxInstanceCount = 50;
 };

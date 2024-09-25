@@ -1,5 +1,6 @@
 #pragma once
 #include <vector>
+#include <glm/glm.hpp>
 
 
 class Mesh {
@@ -11,14 +12,19 @@ public:
     void Unbind() const;
     unsigned int GetIndexCount() const;
     unsigned int GetIndexOffset() const;
+    void SetInstanceModelMatrices(const std::vector<glm::mat4>& modelmatricies);
+
 
 private:
     void SetupMesh();
-
+   
     std::vector<float> m_Vertices;
     std::vector<unsigned int> m_Indices;
     unsigned int m_VAO, m_VBO, m_EBO;
     unsigned int m_IndexOffset;
     unsigned int m_IndexCount;
     unsigned int m_VertexOffset;
+
+    // New instance buffer
+    unsigned int m_InstanceVBO;
 };

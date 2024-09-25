@@ -5,7 +5,7 @@
 #include "OpenGL/GLError.h"
 #include "Renderer/Renderer.h"
 #include "Renderer/Types/Mesh.hpp"
-#include "Shader/Shader.h"
+
 
 Renderer::Renderer()
 {
@@ -32,18 +32,14 @@ void Renderer::Clear() const
 
 
 
-void Renderer::Draw(const std::vector<Mesh*>& meshes, const Shader& shader) const {
+void Renderer::DrawInstanced(const std::vector<Mesh*>& meshes, const Shader& shader, unsigned int instanceCount) const {
     GLCheckError();  // Error check before draw call
-
-    shader.Bind();
 
     for (const Mesh* mesh : meshes) {
         mesh->Bind();
-        glDrawElements(GL_TRIANGLES, mesh->GetIndexCount(), GL_UNSIGNED_INT, (void*)(mesh->GetIndexOffset() * sizeof(unsigned int)));
-        
+        glDrawElementsInstanced(GL_TRIANGLES, mesh->GetIndexCount(), GL_UNSIGNED_INT, (void*)(mesh->GetIndexOffset() * sizeof(unsigned int)), instanceCount);
+        mesh->Unbind();
     }
     
-
-
     GLCheckError();  // Error check after draw call
 }

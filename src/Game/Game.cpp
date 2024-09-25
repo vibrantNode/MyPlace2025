@@ -23,4 +23,3 @@ void Game::Render(Renderer& renderer, Camera& camera) {
     }
 }
 
-

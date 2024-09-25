@@ -12,6 +12,8 @@ public:
 
     void Clear() const;
 
-    void Renderer::Draw(const std::vector<Mesh*>& meshes, const Shader& shader) const;
+    void Renderer::DrawInstanced(const std::vector<Mesh*>& meshes, const Shader& shader, unsigned int instanceCount) const;
 
+private:
+    int instanceCount = 100;
 };
