@@ -21,21 +21,25 @@ void RenderData::Init() {
         "D:/Users/Admin/source/repos/MyHell2024/MyHell2024/res/Shaders/default.frag"
     );
     // Load textures
-    //m_BoxTexture = std::make_unique<Texture>("D:/Users/Admin/source/repos/MyHell2024/MyHell2024/res/Textures/AlienWall2.png");
-    m_PlaneTexture = std::make_unique<Texture>("D:/Users/Admin/source/repos/MyHell2024/MyHell2024/res/Textures/AlienWall2.png");
+    m_BoxTexture = std::make_unique<Texture>("D:/Users/Admin/source/repos/MyHell2024/MyHell2024/res/Textures/AlienWall2.png");
+    m_PlaneTexture = std::make_unique<Texture>("D:/Users/Admin/source/repos/MyHell2024/MyHell2024/res/Textures/spaceFloor.jpg");
 
 
     std::vector<glm::mat4> boxModelMatrices(m_BoxInstanceCount);
     std::vector<glm::mat4> planeModelMatrices(m_PlaneInstanceCount);
 
-    // Generate model matrices for boxes
+    // Model instances
     for (int i = 0; i < m_BoxInstanceCount; ++i) {
-        boxModelMatrices[i] = glm::translate(glm::mat4(1.0f), glm::vec3(i * 2.0f, 0.0f, 0.0f));  // Example translations
+        // Apply tranlations
+        boxModelMatrices[i] = glm::translate(glm::mat4(1.0f), glm::vec3(i * 1.0f, i * 1.0f, i * 1.0f)); 
     }
 
-    // For the plane, use a static model matrix
+    // Plane instaces
     for (int i = 0; i < m_PlaneInstanceCount; ++i) {
-        planeModelMatrices[i] = glm::mat4(1.0f);  // Static for plane
+       
+        // Apply translation 
+        planeModelMatrices[i] = glm::translate(glm::mat4(1.0f), glm::vec3(i * 1.0f,i * -1.0f, i * 1.0f)); 
+
     }
 
     // Set the model matrices for each mesh instance
@@ -60,11 +64,11 @@ void RenderData::Render(Renderer& renderer, Camera& camera) {
 
     // Bind the box mesh and render multiple instances using instanced rendering
     m_BoxMesh->Bind();
+    m_BoxTexture->Bind();
     renderer.DrawInstanced({ m_BoxMesh.get() }, *m_Shader, m_BoxInstanceCount);  // Drawing the box instances
 
     // Bind the plane texture
     m_PlaneTexture->Bind();
-
     // Bind the plane mesh and render multiple instances using instanced rendering
     m_PlaneMesh->Bind();
     renderer.DrawInstanced({ m_PlaneMesh.get() }, *m_Shader, m_PlaneInstanceCount);  // Drawing the plane instances

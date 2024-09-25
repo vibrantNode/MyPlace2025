@@ -42,6 +42,6 @@ private:
 
 
     //Instances
-    int m_PlaneInstanceCount = 50;
-    int m_BoxInstanceCount = 50;
+    int m_PlaneInstanceCount = 500;
+    int m_BoxInstanceCount = 500;
 };
