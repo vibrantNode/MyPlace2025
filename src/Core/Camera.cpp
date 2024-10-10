@@ -6,7 +6,7 @@
 // Constructor
 Camera::Camera(glm::vec3 position, float yaw, float pitch)
     : m_Position(position), m_Yaw(yaw), m_Pitch(pitch), m_Front(glm::vec3(0.0f, 0.0f, -1.0f)),
-    m_WorldUp(glm::vec3(0.0f, 1.0f, 0.0f)), m_Zoom(75.0f), m_MovementSpeed(10.5f) {  // Added m_MovementSpeed
+    m_WorldUp(glm::vec3(0.0f, 1.0f, 0.0f)), m_Zoom(60.0f), m_MovementSpeed(20.5f) {  // Added m_MovementSpeed
     UpdateCameraVectors();
 }
 

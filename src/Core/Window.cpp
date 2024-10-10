@@ -47,8 +47,6 @@ Window::Window(const char* title, int width, int height)
         glViewport(0, 0, width, height);  // Update the OpenGL viewport to new window size
         });
 
-    
-
     // Retrieve the OpenGL version
     const GLubyte* version = glGetString(GL_VERSION);
     std::cout << "OpenGL Version: " << version << std::endl;

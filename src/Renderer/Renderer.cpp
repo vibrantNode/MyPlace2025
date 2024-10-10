@@ -43,3 +43,26 @@ void Renderer::DrawInstanced(const std::vector<Mesh*>& meshes, const Shader& sha
     
     GLCheckError();  // Error check after draw call
 }
+
+// Skybox
+
+void Renderer::DrawSkybox(const Mesh& skyboxMesh, const Shader& shader) const {
+    GLCheckError();  // Error check before draw call
+
+    // Disable depth writing for the skybox
+    glDepthFunc(GL_LEQUAL);
+
+    // Bind the skybox shader
+    shader.Bind();
+
+    // Bind the skybox mesh (cube) and render it
+    skyboxMesh.Bind();
+    glDrawElements(GL_TRIANGLES, skyboxMesh.GetIndexCount(), GL_UNSIGNED_INT, nullptr);
+    skyboxMesh.Unbind();
+
+    // Restore depth function
+    glDepthFunc(GL_LESS);
+
+    shader.Unbind();
+    GLCheckError();  // Error check after draw call
+}

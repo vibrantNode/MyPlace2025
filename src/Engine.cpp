@@ -87,6 +87,8 @@ void Engine::Run() {
 void Engine::ProcessInput(float deltaTime) {
     if (Input::IsKeyPressed(GLFW_KEY_W))
         m_Camera->ProcessKeyboardInput(FORWARD, deltaTime);
+    if (Input::IsKeyPressed(GLFW_KEY_ENTER))
+        m_Camera->ProcessKeyboardInput(FORWARD, deltaTime);
     if (Input::IsKeyPressed(GLFW_KEY_S))
         m_Camera->ProcessKeyboardInput(BACKWARD, deltaTime);
     if (Input::IsKeyPressed(GLFW_KEY_A))

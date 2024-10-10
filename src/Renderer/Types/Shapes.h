@@ -129,86 +129,44 @@ public:
 
         return shape;
     }
+
+
+
+    static ShapeData createCubeMap(float size) {
+        ShapeData shape;
+        float halfWidth = size / 2.0f;
+
+        float skyboxVertices[] = {
+            // Coordinates
+            -1000.0f, -1000.0f,  1000.0f,
+             1000.0f, -1000.0f,  1000.0f,
+             1000.0f, -1000.0f, -1000.0f,
+            -1000.0f, -1000.0f, -1000.0f,
+            -1000.0f,  1000.0f,  1000.0f,
+             1000.0f,  1000.0f,  1000.0f,
+             1000.0f,  1000.0f, -1000.0f,
+            -1000.0f,  1000.0f, -1000.0f,
+        };
+
+        unsigned int skyboxIndices[] = {
+            // Right
+            1, 2, 6,
+            6, 5, 1,
+            // Left
+            0, 4, 7,
+            7, 3, 0,
+            // Top
+            4, 5, 6,
+            6, 7, 4,
+            // Bottom
+            0, 3, 2,
+            2, 1, 0,
+            // Back
+            0, 1, 5,
+            5, 4, 0,
+            // Front
+            3, 7, 6,
+            6, 2, 3,
+        };
+    };
 };
-
-/*
-std::vector<float> combinedVertices = {
-    // Box vertices (24 vertices for the box with unique colors at each point)
-
-  -0.5f, -0.5f,  0.5f,  1.0f, 0.0f, 0.0f,  0.0f, 0.0f,   // bottom-left (red)
-0.5f, -0.5f,  0.5f,  0.0f, 1.0f, 0.0f,  1.0f, 0.0f,   // bottom-right (green)
-0.5f,  0.5f,  0.5f,  0.0f, 0.0f, 1.0f,  1.0f, 1.0f,   // top-right (blue)
--0.5f,  0.5f,  0.5f,  1.0f, 1.0f, 0.0f,  0.0f, 1.0f,   // top-left (yellow)
-
-// Back face
--0.5f, -0.5f, -0.5f,  1.0f, 0.0f, 1.0f,  0.0f, 0.0f,   // bottom-left (purple)
- 0.5f, -0.5f, -0.5f,  0.0f, 1.0f, 1.0f,  1.0f, 0.0f,   // bottom-right (cyan)
- 0.5f,  0.5f, -0.5f,  1.0f, 1.0f, 1.0f,  1.0f, 1.0f,   // top-right (white)
--0.5f,  0.5f, -0.5f,  0.5f, 0.5f, 0.5f,  0.0f, 1.0f,   // top-left (gray)
-
-// Left face
--0.5f, -0.5f, -0.5f,  0.5f, 0.0f, 0.5f,  0.0f, 0.0f,   // bottom-left (pink)
--0.5f, -0.5f,  0.5f,  0.0f, 0.5f, 0.5f,  1.0f, 0.0f,   // bottom-right (light blue)
--0.5f,  0.5f,  0.5f,  0.5f, 1.0f, 0.0f,  1.0f, 1.0f,   // top-right (orange)
--0.5f,  0.5f, -0.5f,  1.0f, 0.5f, 0.0f,  0.0f, 1.0f,   // top-left (dark yellow)
-
-// Right face
- 0.5f, -0.5f, -0.5f,  1.0f, 0.0f, 0.5f,  0.0f, 0.0f,   // bottom-left (purple)
- 0.5f, -0.5f,  0.5f,  0.0f, 0.5f, 1.0f,  1.0f, 0.0f,   // bottom-right (light blue)
- 0.5f,  0.5f,  0.5f,  1.0f, 0.5f, 0.0f,  1.0f, 1.0f,   // top-right (orange)
- 0.5f,  0.5f, -0.5f,  0.5f, 1.0f, 1.0f,  0.0f, 1.0f,   // top-left (light green)
-
- // Top face
- -0.5f,  0.5f, -0.5f,  0.5f, 0.0f, 0.0f,  0.0f, 0.0f,   // bottom-left (dark red)
- -0.5f,  0.5f,  0.5f,  0.0f, 0.5f, 0.0f,  1.0f, 0.0f,   // bottom-right (light green)
-  0.5f,  0.5f,  0.5f,  0.0f, 0.0f, 0.5f,  1.0f, 1.0f,   // top-right (dark blue)
-  0.5f,  0.5f, -0.5f,  1.0f, 0.5f, 0.5f,  0.0f, 1.0f,   // top-left (light pink)
-
-  // Bottom face
-  -0.5f, -0.5f, -0.5f,  0.5f, 0.0f, 0.5f,  0.0f, 1.0f,   // bottom-left (dark purple)
-  -0.5f, -0.5f,  0.5f,  0.5f, 0.5f, 0.0f,  1.0f, 1.0f,   // bottom-right (light yellow)
-   0.5f, -0.5f,  0.5f,  0.0f, 1.0f, 0.5f,  1.0f, 0.0f,   // top-right (light pink)
-   0.5f, -0.5f, -0.5f,  0.0f, 0.0f, 1.0f,  0.0f, 0.0f,    // top-left (dark blue)
-
-        -1.0f,  0.0f, -1.0f,  1.0f, 0.0f, 0.0f,  0.0f, 0.0f,   // bottom-left (red)
- 1.0f,  0.0f, -1.0f,  0.0f, 1.0f, 0.0f,  1.0f, 0.0f,   // bottom-right (green)
- 1.0f,  0.0f,  1.0f,  0.0f, 0.0f, 1.0f,  1.0f, 1.0f,   // top-right (blue)
--1.0f,  0.0f,  1.0f,  1.0f, 1.0f, 0.0f,  0.0f, 1.0f    // top-left (yellow)
-};
-
-
-
-std::vector<unsigned int> combinedIndices = {
-    // Box indices (36 indices for the box)
-    // Front face
-    0, 1, 2,  2, 3, 0,
-
-    // Back face
-    4, 5, 6,  6, 7, 4,
-
-    // Left face
-    8, 9, 10, 10, 11, 8,
-
-    // Right face
-    12, 13, 14, 14, 15, 12,
-
-    // Top face
-    16, 17, 18, 18, 19, 16,
-
-    // Bottom face
-    20, 21, 22, 22, 23, 20,
-
-    // Plane indices (6 indices for the plane)
-    24, 25, 26, 26, 27, 24
-};
-
-// Offsets and counts
-unsigned int boxVertexOffset = 0;        // The box vertices start at the beginning of the array
-unsigned int boxIndexOffset = 0;         // The box indices start at the beginning
-unsigned int boxIndexCount = 36;         // Number of indices for the box
-
-// Each vertex now has 8 floats (3 for position, 3 for color, 2 for texture coordinates)
-unsigned int planeVertexOffset = 24 * 8; // Offset after box vertices (24 vertices * 8 floats per vertex)
-unsigned int planeIndexOffset = 36;      // Offset after the box indices
-unsigned int planeIndexCount = 6;
-*/
