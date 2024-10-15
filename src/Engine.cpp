@@ -20,7 +20,7 @@ Engine::Engine()
     :m_Running(true) {
    
     // Initialize the GLFW window
-    m_Window = std::make_unique<Window>("My Universe", 1920, 1080);
+    m_Window = std::make_unique<Window>("My Universe", 1100, 600);
 
     // Initialize the Renderer
     m_Renderer = std::make_unique<Renderer>();
@@ -121,4 +121,12 @@ void Engine::MouseCallback(GLFWwindow* window, double xpos, double ypos) {
     engine->m_Camera->ProcessMouseMovement(xoffset, yoffset);
 }
 
+
+void Camera::scroll_callback(GLFWwindow* window, double xoffset, double yoffset) {
+    m_Zoom -= (float)yoffset;
+    if (m_Zoom < 1.0f)
+        m_Zoom = 1.0f;
+    if (m_Zoom > 45.0f)
+        m_Zoom = 45.0f;
+}
 

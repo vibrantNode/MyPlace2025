@@ -16,9 +16,8 @@ public:
     void DrawSkybox(const Mesh& skyboxMesh, const Shader& shader) const;
 
     void Renderer::DrawInstanced(const std::vector<Mesh*>& meshes, const Shader& shader, unsigned int instanceCount) const;
-
-
     void Renderer::MultiDrawIndirectCommand() {};
+
 private:
-    int instanceCount = 100;
+    int instanceCount = 0;
 };

@@ -1,8 +1,14 @@
-#include <vector>
-#include <glm/glm.hpp>
+
+#ifndef M_PI
+#define M_PI 3.14159265358979323846
+#endif
 
 #include <vector>
 #include <glm/glm.hpp>
+#include <cmath>
+#include <vector>
+#include <glm/glm.hpp>
+
 
 class ShapeFactory {
 public:
@@ -130,43 +136,73 @@ public:
         return shape;
     }
 
-
-
-    static ShapeData createCubeMap(float size) {
+    static ShapeData CreateSphere(float radius, unsigned int sectorCount, unsigned int stackCount) {
         ShapeData shape;
-        float halfWidth = size / 2.0f;
 
-        float skyboxVertices[] = {
-            // Coordinates
-            -1000.0f, -1000.0f,  1000.0f,
-             1000.0f, -1000.0f,  1000.0f,
-             1000.0f, -1000.0f, -1000.0f,
-            -1000.0f, -1000.0f, -1000.0f,
-            -1000.0f,  1000.0f,  1000.0f,
-             1000.0f,  1000.0f,  1000.0f,
-             1000.0f,  1000.0f, -1000.0f,
-            -1000.0f,  1000.0f, -1000.0f,
-        };
+        float x, y, z, xy;                               // vertex position
+        float nx, ny, nz, lengthInv = 1.0f / radius;     // normal
+        float s, t;                                      // texture coordinates
 
-        unsigned int skyboxIndices[] = {
-            // Right
-            1, 2, 6,
-            6, 5, 1,
-            // Left
-            0, 4, 7,
-            7, 3, 0,
-            // Top
-            4, 5, 6,
-            6, 7, 4,
-            // Bottom
-            0, 3, 2,
-            2, 1, 0,
-            // Back
-            0, 1, 5,
-            5, 4, 0,
-            // Front
-            3, 7, 6,
-            6, 2, 3,
-        };
-    };
+        float sectorStep = 2 * M_PI / sectorCount;
+        float stackStep = M_PI / stackCount;
+        float sectorAngle, stackAngle;
+
+        for (unsigned int i = 0; i <= stackCount; ++i) {
+            stackAngle = M_PI / 2 - i * stackStep;        // from pi/2 to -pi/2
+            xy = radius * cosf(stackAngle);              // r * cos(u)
+            z = radius * sinf(stackAngle);               // r * sin(u)
+
+            // add (sectorCount+1) vertices per stack
+            // the first and last vertices have same position and normal, but different tex coords
+            for (unsigned int j = 0; j <= sectorCount; ++j) {
+                sectorAngle = j * sectorStep;           // from 0 to 2pi
+
+                // vertex position (x, y, z)
+                x = xy * cosf(sectorAngle);             // r * cos(u) * cos(v)
+                y = xy * sinf(sectorAngle);             // r * cos(u) * sin(v)
+                shape.vertices.push_back(x);
+                shape.vertices.push_back(y);
+                shape.vertices.push_back(z);
+
+                // normalized vertex normal (nx, ny, nz)
+                nx = x * lengthInv;
+                ny = y * lengthInv;
+                nz = z * lengthInv;
+                shape.vertices.push_back(nx);
+                shape.vertices.push_back(ny);
+                shape.vertices.push_back(nz);
+
+                // vertex tex coord (s, t) range between [0, 1]
+                s = (float)j / sectorCount;
+                t = (float)i / stackCount;
+                shape.vertices.push_back(s);
+                shape.vertices.push_back(t);
+            }
+        }
+
+        // Indices
+        unsigned int k1, k2;
+        for (unsigned int i = 0; i < stackCount; ++i) {
+            k1 = i * (sectorCount + 1);     // beginning of current stack
+            k2 = k1 + sectorCount + 1;      // beginning of next stack
+
+            for (unsigned int j = 0; j < sectorCount; ++j, ++k1, ++k2) {
+                if (i != 0) {
+                    // triangle 1
+                    shape.indices.push_back(k1);
+                    shape.indices.push_back(k2);
+                    shape.indices.push_back(k1 + 1);
+                }
+
+                if (i != (stackCount - 1)) {
+                    // triangle 2
+                    shape.indices.push_back(k1 + 1);
+                    shape.indices.push_back(k2);
+                    shape.indices.push_back(k2 + 1);
+                }
+            }
+        }
+
+        return shape;
+    }
 };

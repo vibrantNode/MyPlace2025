@@ -1,8 +1,8 @@
+
 #include "RenderData.h"
 #include "Renderer/Renderer.h"
 #include "Shader/Shader.h"
 #include "Types/CubeMap.h"
-#include "Renderer/Types/Mesh.hpp"
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include "Renderer/Types/Mesh.hpp"
@@ -12,7 +12,8 @@
 #include "Types/Shapes.h"
 #include "Common.h"
 #include <random>
-
+#include <glm/gtc/matrix_transform.hpp>  // For matrix transforms like rotate, translate
+#include <glm/gtc/constants.hpp> 
 
 
 void RenderData::Init() {
@@ -24,12 +25,22 @@ void RenderData::Init() {
         "D:/Users/Admin/source/repos/MyHell2024/MyHell2024/res/Shaders/default.frag"
     );
     // Load textures
-    m_BoxTexture = std::make_unique<Texture>("D:/Users/Admin/source/repos/MyHell2024/MyHell2024/res/Textures/AlienWall2.png");
-    m_PlaneTexture = std::make_unique<Texture>("D:/Users/Admin/source/repos/MyHell2024/MyHell2024/res/Textures/container2_specular.png");
-
+    m_BoxTexture = std::make_unique<Texture>("D:/Users/Admin/source/repos/MyHell2024/MyHell2024/res/Textures/NewMan.png");
+    m_PlaneTexture = std::make_unique<Texture>("D:/Users/Admin/source/repos/MyHell2024/MyHell2024/res/Textures/awesomeface.png");
+    m_SphereTexture = std::make_unique<Texture>("D:/Users/Admin/source/repos/MyHell2024/MyHell2024/res/Textures/mystical1.jpg");
 
     // Skybox textures
     std::vector<std::string> facesCubemap = {
+
+        // Cloudy skybox
+       /* "D:/Users/Admin/source/repos/MyHell2024/MyHell2024/res/Textures/CloudySkybox/bluecloud_rt.jpg",
+        "D:/Users/Admin/source/repos/MyHell2024/MyHell2024/res/Textures/CloudySkybox/bluecloud_lf.jpg",
+        "D:/Users/Admin/source/repos/MyHell2024/MyHell2024/res/Textures/CloudySkybox/bluecloud_dn.jpg",
+        "D:/Users/Admin/source/repos/MyHell2024/MyHell2024/res/Textures/CloudySkybox/bluecloud_up.jpg",
+        "D:/Users/Admin/source/repos/MyHell2024/MyHell2024/res/Textures/CloudySkybox/bluecloud_ft.jpg",
+        "D:/Users/Admin/source/repos/MyHell2024/MyHell2024/res/Textures/CloudySkybox/bluecloud_bk.jpg",*/
+        
+        // Space Skybox
         "D:/Users/Admin/source/repos/MyHell2024/MyHell2024/res/Textures/SpaceSkybox/right.png",
          "D:/Users/Admin/source/repos/MyHell2024/MyHell2024/res/Textures/SpaceSkybox/left.png",
          "D:/Users/Admin/source/repos/MyHell2024/MyHell2024/res/Textures/SpaceSkybox/bot.png",
@@ -47,14 +58,16 @@ void RenderData::Init() {
     );
 
 
-    std::vector<glm::mat4> boxModelMatrices(m_BoxInstanceCount);
+   
     std::vector<glm::mat4> planeModelMatrices(m_PlaneInstanceCount);
+    std::vector<glm::mat4> sphereModelMatrices(m_SphereInstanceCount);
 
+    
     // Model instances
     // Create a random number generator
     std::random_device rd;  // Obtain a random number from hardware
     std::mt19937 gen(rd()); // Seed the generator
-    std::uniform_real_distribution<float> dis(-150.0f, 150.0f); // Increase the range for more spread
+    std::uniform_real_distribution<float> dis(-50.0f, 50.0f); // Increase the range for more spread
 
     // Box instances
     for (int i = 0; i < m_BoxInstanceCount; ++i) {
@@ -72,25 +85,50 @@ void RenderData::Init() {
         float randomY = dis(gen) - 1.0f; // Shift downwards
         float randomZ = dis(gen);
         planeModelMatrices[i] = glm::translate(glm::mat4(1.0f), glm::vec3(randomX, randomY, randomZ));
+        planeModelMatrices[i] = glm::scale(glm::mat4(50.0f), glm::vec3(10.0f, 10.0f, 10.0f));
+    }
+
+    // Sphere instances
+    for (int i = 0; i < m_SphereInstanceCount; ++i) {
+        float randomX = dis(gen);
+        float randomY = dis(gen);
+        float randomZ = dis(gen);
+        sphereModelMatrices[i] = glm::translate(glm::mat4(1.0f), glm::vec3(randomX, randomY, randomZ));
     }
 
     // Set the model matrices for each mesh instance
-    m_BoxMesh->SetInstanceModelMatrices(boxModelMatrices);
+   // m_BoxMesh->SetInstanceModelMatrices(boxModelMatrices);
     m_PlaneMesh->SetInstanceModelMatrices(planeModelMatrices);
-  
+    m_SphereMesh->SetInstanceModelMatrices(sphereModelMatrices);
 }
 
 void RenderData::Update(float deltaTime) {
-  
+    glm::vec3 rotationAxis(0.0f, 1.0f, 0.0f);  // Y-axis
+    float rotationSpeed = glm::radians(50.0f) * deltaTime; // Rotation speed in radians
 
+    // Make sure m_BoxInstanceCount is set correctly and matches boxModelMatrices size
+    for (int i = 0; i < m_BoxInstanceCount; ++i) {
+        // Update rotation for each box
+        boxModelMatrices[i] = glm::rotate(boxModelMatrices[i], rotationSpeed, rotationAxis);
+    }
+
+    // Update the instance model matrices in the mesh
+    m_BoxMesh->SetInstanceModelMatrices(boxModelMatrices);
 }
-RenderData::RenderData() : m_Shader(nullptr) {
+
+
+RenderData::RenderData() 
+    : m_Shader(nullptr),
+    boxModelMatrices(m_BoxInstanceCount, glm::mat4(1.0f))// We ass this here so that it can be accessed by the update method
+    {
 
     // Generate shape data
     ShapeFactory::ShapeData cube = ShapeFactory::CreateCube(1.7f);
     ShapeFactory::ShapeData plane = ShapeFactory::CreatePlane(2.0f, 2.0f);
     ShapeFactory::ShapeData skyboxCube = ShapeFactory::CreateCube(1.0f);
-   
+    ShapeFactory::ShapeData sphere = ShapeFactory::CreateSphere(1.0f, 32, 32);
+    
+    
 
     // Offsets for vertex and index data (dynamic approach)
     size_t cubeVertexOffset = 0;
@@ -109,6 +147,13 @@ RenderData::RenderData() : m_Shader(nullptr) {
     combinedVertices.insert(combinedVertices.end(), plane.vertices.begin(), plane.vertices.end());
     combinedIndices.insert(combinedIndices.end(), plane.indices.begin(), plane.indices.end());
 
+    // Sphere offsets and data appending
+    size_t sphereVertexOffset = combinedVertices.size() / 8;  // Sphere vertex offset
+    size_t sphereIndexOffset = combinedIndices.size();        // Sphere index offset
+    size_t sphereIndexCount = sphere.indices.size();
+
+    combinedVertices.insert(combinedVertices.end(), sphere.vertices.begin(), sphere.vertices.end());
+    combinedIndices.insert(combinedIndices.end(), sphere.indices.begin(), sphere.indices.end());
 
 
     // Create Cube Mesh object
@@ -125,15 +170,20 @@ RenderData::RenderData() : m_Shader(nullptr) {
     m_SkyboxMesh = std::make_unique<Mesh>(
         skyboxCube.vertices, skyboxCube.indices, 0, 0, skyboxCube.indices.size()
     );
+
+    // Create Sphere Mesh object
+    m_SphereMesh = std::make_unique<Mesh>(
+        combinedVertices, combinedIndices, sphereVertexOffset, sphereIndexOffset, sphereIndexCount
+    );
 }
 
 void RenderData::Render(Renderer& renderer, Camera& camera) {
+
     // Calculate view and projection matrices
     glm::mat4 view = camera.GetViewMatrix();
-    glm::mat4 projection = glm::perspective(glm::radians(camera.GetZoom()), 1280.0f / 720.0f, 0.1f, 100.0f);
+    glm::mat4 projection = glm::perspective(glm::radians(camera.GetZoom()), 1280.0f / 720.0f, 0.1f, 1000.0f);
 
     // Skybox
-     // Render Skybox
     glm::mat4 skyboxView = glm::mat4(glm::mat3(view)); // Remove translation from the view matrix
     m_SkyboxShader->Bind();
     m_SkyboxShader->SetUniformMat4f("view", skyboxView);
@@ -155,6 +205,11 @@ void RenderData::Render(Renderer& renderer, Camera& camera) {
     // Bind the plane mesh and render multiple instances using instanced rendering
     m_PlaneMesh->Bind();
     renderer.DrawInstanced({ m_PlaneMesh.get() }, *m_Shader, m_PlaneInstanceCount);  // Drawing the plane instances
+
+    // Render the sphere instances
+    m_SphereTexture->Bind();
+    m_SphereMesh->Bind();
+    renderer.DrawInstanced({ m_SphereMesh.get() }, *m_Shader, m_SphereInstanceCount);  // Draw sphere instances
 
     // Unbind the shader
     m_Shader->Unbind();

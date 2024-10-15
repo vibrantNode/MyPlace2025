@@ -1,5 +1,5 @@
 #pragma once
-
+#include <GLFW/glfw3.h>
 #include <glm/glm.hpp>
 
 enum CameraMovement {
@@ -28,7 +28,18 @@ public:
     // Set movement speed
     void SetMovementSpeed(float speed);
 
+    void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
+ 
+
 private:
+
+    float m_LastX; // Last mouse x position
+    float m_LastY; // Last mouse y position
+    float m_MouseSensitivity; // Sensitivity factor for mouse input
+    // Deadzone
+    float m_MouseDeadZone;
+    // Inertia
+    glm::vec3 m_Velocity;
     // Camera attributes
     glm::vec3 m_Position;
     glm::vec3 m_Front;

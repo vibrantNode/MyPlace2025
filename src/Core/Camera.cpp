@@ -6,7 +6,7 @@
 // Constructor
 Camera::Camera(glm::vec3 position, float yaw, float pitch)
     : m_Position(position), m_Yaw(yaw), m_Pitch(pitch), m_Front(glm::vec3(0.0f, 0.0f, -1.0f)),
-    m_WorldUp(glm::vec3(0.0f, 1.0f, 0.0f)), m_Zoom(60.0f), m_MovementSpeed(20.5f) {  // Added m_MovementSpeed
+    m_WorldUp(glm::vec3(0.0f, 1.0f, 0.0f)), m_Zoom(75.0f), m_MovementSpeed(20.5f) {  // Added m_MovementSpeed
     UpdateCameraVectors();
 }
 
@@ -30,15 +30,16 @@ void Camera::ProcessMouseMovement(float xoffset, float yoffset, bool constrainPi
 // Keyboard input processing (with adjustable speed)
 void Camera::ProcessKeyboardInput(int direction, float deltaTime) {
     float velocity = m_MovementSpeed * deltaTime;  // Use movement speed
-
+    float velocityRight = 9.0 * deltaTime;
+    float velocityLeft = 9.0 * deltaTime;
     if (direction == FORWARD)
         m_Position += m_Front * velocity;
     if (direction == BACKWARD)
         m_Position -= m_Front * velocity;
     if (direction == LEFT)
-        m_Position -= m_Right * velocity;
+        m_Position -= m_Right * velocityLeft;
     if (direction == RIGHT)
-        m_Position += m_Right * velocity;
+        m_Position += m_Right * velocityRight;
 }
 
 // Get the view matrix
@@ -68,3 +69,5 @@ float Camera::GetZoom() const {
 void Camera::SetMovementSpeed(float speed) {
     m_MovementSpeed = speed;
 }
+
+

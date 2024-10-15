@@ -34,6 +34,9 @@ public:
     void Update(float deltaTime);
     void Render(Renderer& renderer, Camera& camera);
 
+    // Misc
+
+   
 private:
     // Shaders
     std::unique_ptr<Shader> m_Shader;
@@ -45,20 +48,28 @@ private:
     std::unique_ptr<Texture> m_PlaneTexture;
     std::unique_ptr<Texture> m_BoxTexture;
     std::unique_ptr<Texture> m_Specular;
+    std::unique_ptr<Texture> m_SphereTexture;
 
 
     // Meshes
     std::unique_ptr<Mesh> m_BoxMesh;
     std::unique_ptr<Mesh> m_PlaneMesh;
     std::unique_ptr<Mesh> m_SkyboxMesh;
+    std::unique_ptr<Mesh> m_SphereMesh;
 
 
     //Instances
-    int m_PlaneInstanceCount = 500000;
-    int m_BoxInstanceCount = 500000;
+    int m_PlaneInstanceCount = 1;
+    int m_BoxInstanceCount = 100;
+    int m_SphereInstanceCount = 100;
 
     // Misc
+    std::vector<glm::mat4> boxModelMatrices; // Declare as a member variable
+   
+
     float rotationSpeed = 45.0f; // Degrees per second
+
+  
 
     std::unique_ptr<Skybox> m_Skybox;
 
