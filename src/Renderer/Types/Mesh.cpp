@@ -58,7 +58,7 @@ void Mesh::SetInstanceModelMatrices(const std::vector<glm::mat4>& modelMatrices)
 
     // Create and bind instance VBO for model matrices
     glBindBuffer(GL_ARRAY_BUFFER, m_InstanceVBO);
-    glBufferData(GL_ARRAY_BUFFER, modelMatrices.size() * sizeof(glm::mat4), &modelMatrices[0], GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, modelMatrices.size() * sizeof(glm::mat4), modelMatrices.data(), GL_STATIC_DRAW);
 
     // Set instance attributes for the model matrix (layout locations 3, 4, 5, and 6)
     for (unsigned int i = 0; i < 4; i++) {
@@ -69,6 +69,14 @@ void Mesh::SetInstanceModelMatrices(const std::vector<glm::mat4>& modelMatrices)
 
     glBindVertexArray(0);  // Unbind VAO
 }
+void Mesh::UpdateInstanceModelMatrices(const std::vector<glm::mat4>& modelMatrices) {
+    glBindVertexArray(m_VAO);
+    glBindBuffer(GL_ARRAY_BUFFER, m_InstanceVBO);
+    glBufferSubData(GL_ARRAY_BUFFER, 0, modelMatrices.size() * sizeof(glm::mat4), modelMatrices.data());
+    glBindVertexArray(0); // Unbind VAO
+}
+
+
 
 void Mesh::Bind() const {
     glBindVertexArray(m_VAO);

@@ -10,10 +10,10 @@ void Game::Init() {
     currentScene = std::make_unique<RenderData>();
     currentScene->Init();  // Initialize scene-specific assets like shaders, meshes, etc.
 }
-
-void Game::Update(float deltaTime) {
+void Game::Update(float deltaTime, Camera& camera) {
     if (currentScene) {
-        currentScene->Update(deltaTime);
+        glm::vec3 cameraPosition = camera.GetPosition(); // Get the camera's current position
+        currentScene->Update(deltaTime); // Pass both delta time and camera position
     }
 }
 

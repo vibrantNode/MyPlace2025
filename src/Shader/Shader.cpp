@@ -117,3 +117,10 @@ void Shader::LinkShaders(GLuint vertexShader, GLuint fragmentShader)
         std::cerr << "Program linking failed:\n" << log << std::endl;
     }
 }
+
+void Shader::SetUniform3f(const std::string& name, float v0, float v1, float v2) const {
+    Bind();  // Ensure the shader program is bound
+    GLint location = glGetUniformLocation(m_ProgramID, name.c_str());
+  
+    glUniform3f(location, v0, v1, v2);
+}

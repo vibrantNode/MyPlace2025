@@ -8,7 +8,7 @@ public:
     ~Game();
 
     void Init();       // Initialize the game and load the first scene
-    void Update(float deltaTime);  // Update game logic
+    void Update(float deltaTime, Camera& camera);  // Update game logic
     void Render(Renderer& renderer, Camera& camera);
 
 private:

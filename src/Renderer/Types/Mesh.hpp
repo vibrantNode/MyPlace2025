@@ -13,7 +13,7 @@ public:
     unsigned int GetIndexCount() const;
     unsigned int GetIndexOffset() const;
     void SetInstanceModelMatrices(const std::vector<glm::mat4>& modelmatricies);
-
+    void UpdateInstanceModelMatrices(const std::vector<glm::mat4>& modelMatrices);
 
 private:
     void SetupMesh();
@@ -24,7 +24,7 @@ private:
     unsigned int m_IndexOffset;
     unsigned int m_IndexCount;
     unsigned int m_VertexOffset;
-
+    std::vector<glm::mat4> m_ModelMatrices;
     // New instance buffer
     unsigned int m_InstanceVBO;
 };

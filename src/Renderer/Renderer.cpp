@@ -35,6 +35,8 @@ void Renderer::DrawSkybox(const Mesh& skyboxMesh, const Shader& shader) const {
     GLCheckError();
     // Disable depth writing for the skybox
     glDepthFunc(GL_LEQUAL);
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     shader.Bind();
 
     skyboxMesh.Bind();
@@ -55,7 +57,7 @@ void Renderer::DrawInstanced(const std::vector<Mesh*>& meshes, const Shader& sha
         glDrawElementsInstanced(GL_TRIANGLES, mesh->GetIndexCount(), GL_UNSIGNED_INT, (void*)(mesh->GetIndexOffset() * sizeof(unsigned int)), instanceCount);
         mesh->Unbind();
     }
-    // Last paramater is redundant so figure out what is going on there when you can
+  
     GLCheckError();  
 }
 

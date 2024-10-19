@@ -43,31 +43,36 @@ private:
     std::unique_ptr<Shader> m_LightingShader;
     std::unique_ptr<Shader> m_LightSourceShader;
     std::unique_ptr<Shader> m_SkyboxShader;
+    std::unique_ptr<Shader> m_WallShader;
 
     // Textures
     std::unique_ptr<Texture> m_PlaneTexture;
     std::unique_ptr<Texture> m_BoxTexture;
     std::unique_ptr<Texture> m_Specular;
     std::unique_ptr<Texture> m_SphereTexture;
-
+    std::unique_ptr<Texture> m_RobinTexture;
 
     // Meshes
     std::unique_ptr<Mesh> m_BoxMesh;
     std::unique_ptr<Mesh> m_PlaneMesh;
     std::unique_ptr<Mesh> m_SkyboxMesh;
     std::unique_ptr<Mesh> m_SphereMesh;
+    std::unique_ptr<Mesh> m_WallMesh;
 
 
     //Instances
     int m_PlaneInstanceCount = 1;
-    int m_BoxInstanceCount = 100;
-    int m_SphereInstanceCount = 100;
+    int m_BoxInstanceCount = 500;
+    int m_SphereInstanceCount = 700;
+    int m_WallInstanceCount = 1500;
+
 
     // Misc
     std::vector<glm::mat4> boxModelMatrices; // Declare as a member variable
-   
+    std::vector<glm::mat4> wallModelMatrices;
+    std::vector<glm::vec3> wallPositions;
 
-    float rotationSpeed = 45.0f; // Degrees per second
+    float rotationSpeed = 60.0f; // Degrees per second
 
   
 

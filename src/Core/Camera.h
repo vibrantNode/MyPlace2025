@@ -30,6 +30,8 @@ public:
 
     void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
  
+    glm::vec3 GetPosition() const;
+ 
 
 private:
 

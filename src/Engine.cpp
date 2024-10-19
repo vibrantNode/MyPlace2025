@@ -73,7 +73,7 @@ void Engine::Run() {
         m_Renderer->Clear();
 
         // Update and render the game (and the current scene)
-        m_Game.Update(deltaTime);
+        m_Game.Update(deltaTime, *m_Camera);
         m_Game.Render(*m_Renderer, *m_Camera);
        
         // Swap buffers and poll for events
