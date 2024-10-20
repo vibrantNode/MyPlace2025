@@ -58,23 +58,28 @@ private:
     std::unique_ptr<Mesh> m_SkyboxMesh;
     std::unique_ptr<Mesh> m_SphereMesh;
     std::unique_ptr<Mesh> m_WallMesh;
+    
 
 
     //Instances
     int m_PlaneInstanceCount = 1;
-    int m_BoxInstanceCount = 500;
-    int m_SphereInstanceCount = 700;
-    int m_WallInstanceCount = 1500;
+    int m_BoxInstanceCount = 200;
+    int m_SphereInstanceCount = 400;
+    int m_WallInstanceCount = 1000;
 
 
     // Misc
     std::vector<glm::mat4> boxModelMatrices; // Declare as a member variable
     std::vector<glm::mat4> wallModelMatrices;
     std::vector<glm::vec3> wallPositions;
+    
 
     float rotationSpeed = 60.0f; // Degrees per second
 
-  
+
+    float scaleFactorX = 20.0f;
+    float scaleFactorY = 20.0f;
+    float scaleFactorZ = 20.0f;
 
     std::unique_ptr<Skybox> m_Skybox;
 

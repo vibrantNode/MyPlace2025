@@ -205,4 +205,23 @@ public:
 
         return shape;
     }
+
+    // Generate a ray with a specified length
+    static ShapeData CreateRay(float length) {
+        ShapeData shape;
+
+        // Define vertices for the ray (start at origin, end at specified length)
+        shape.vertices = {
+            0.0f, 0.0f, 0.0f,  // Ray start
+            0.0f, 0.0f, length, // Ray end
+        };
+
+        // Define indices for the ray (one line)
+        shape.indices = {
+            0, 1,
+        };
+
+        return shape;
+    }
+
 };

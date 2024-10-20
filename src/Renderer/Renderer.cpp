@@ -61,3 +61,16 @@ void Renderer::DrawInstanced(const std::vector<Mesh*>& meshes, const Shader& sha
     GLCheckError();  
 }
 
+// Ray cast test
+
+Ray Renderer::CastRayY(const glm::vec3& origin, float length) const {
+    Ray ray;
+    ray.origin = origin; // Starting point of the ray
+    ray.direction = glm::vec3(0.0f, 1.0f, 0.0f); // Direction along the Y-axis
+
+    // Optionally, you could scale the direction by the desired length
+    ray.direction = glm::normalize(ray.direction) * length;
+
+    return ray;
+}
+

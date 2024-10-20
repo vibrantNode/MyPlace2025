@@ -9,6 +9,8 @@
 #include <sstream>
 #include <iostream>
 
+
+
 // Constructor to load and compile shaders
 Shader::Shader(const std::string& vertexPath, const std::string& fragmentPath)
 {
@@ -123,4 +125,22 @@ void Shader::SetUniform3f(const std::string& name, float v0, float v1, float v2)
     GLint location = glGetUniformLocation(m_ProgramID, name.c_str());
   
     glUniform3f(location, v0, v1, v2);
+}
+void Shader::setVec3(const std::string& name, const glm::vec3& value) const {
+    Bind();  // Ensure the shader program is bound
+    GLint location = glGetUniformLocation(m_ProgramID, name.c_str());
+    if (location == -1) {
+        std::cerr << "Uniform " << name << " not found!" << std::endl;
+        return;
+    }
+    glUniform3f(location, value.x, value.y, value.z);
+}
+void Shader::setFloat(const std::string& name, float value) const {
+    Bind();  // Ensure the shader program is bound
+    GLint location = glGetUniformLocation(m_ProgramID, name.c_str());
+    if (location == -1) {
+        std::cerr << "Uniform " << name << " not found!" << std::endl;
+        return;
+    }
+    glUniform1f(location, value);
 }

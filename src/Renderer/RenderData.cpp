@@ -32,9 +32,9 @@ void RenderData::Init() {
 
     // Load textures
     m_BoxTexture = std::make_unique<Texture>("D:/Users/Admin/source/repos/MyHell2024/MyHell2024/res/Textures/stoneWall.jpg");
-    m_PlaneTexture = std::make_unique<Texture>("D:/Users/Admin/source/repos/MyHell2024/MyHell2024/res/Textures/awesomeface.png");
-    m_SphereTexture = std::make_unique<Texture>("D:/Users/Admin/source/repos/MyHell2024/MyHell2024/res/Textures/mystical1.jpg");
-    m_RobinTexture = std::make_unique<Texture>("D:/Users/Admin/source/repos/MyHell2024/MyHell2024/res/Textures/Robin1.png");
+    m_PlaneTexture = std::make_unique<Texture>("D:/Users/Admin/source/repos/MyHell2024/MyHell2024/res/Textures/spaceFloor.jpg");
+    m_SphereTexture = std::make_unique<Texture>("D:/Users/Admin/source/repos/MyHell2024/MyHell2024/res/Textures/Robin1.jpg");
+    m_RobinTexture = std::make_unique<Texture>("D:/Users/Admin/source/repos/MyHell2024/MyHell2024/res/Textures/mystical1.jpg");
 
 
     // Skybox textures
@@ -61,7 +61,7 @@ void RenderData::Init() {
 
 
         // Space Skybox
-       "D:/Users/Admin/source/repos/MyHell2024/MyHell2024/res/Textures/SpaceSkybox/right.png",
+         "D:/Users/Admin/source/repos/MyHell2024/MyHell2024/res/Textures/SpaceSkybox/right.png",
          "D:/Users/Admin/source/repos/MyHell2024/MyHell2024/res/Textures/SpaceSkybox/left.png",
          "D:/Users/Admin/source/repos/MyHell2024/MyHell2024/res/Textures/SpaceSkybox/bot.png",
          "D:/Users/Admin/source/repos/MyHell2024/MyHell2024/res/Textures/SpaceSkybox/top.png",
@@ -87,7 +87,7 @@ void RenderData::Init() {
     // Create a random number generator
     std::random_device rd;  // Obtain a random number from hardware
     std::mt19937 gen(rd()); // Seed the generator
-    std::uniform_real_distribution<float> dis(-60.0f, 60.0f); // Increase the range for more spread
+    std::uniform_real_distribution<float> dis(-300.0f, 200.0f); // Increase the range for more spread
 
     // Box instances
     for (int i = 0; i < m_BoxInstanceCount; ++i) {
@@ -102,11 +102,13 @@ void RenderData::Init() {
     // Plane instances
     for (int i = 0; i < m_PlaneInstanceCount; ++i) {
         // Apply random translations
+
+        float explicitY = 15.0f;
         float randomX = dis(gen);
         float randomY = dis(gen) - 5.0f; // Shift downwards
         float randomZ = dis(gen);
-        planeModelMatrices[i] = glm::translate(glm::mat4(1.0f), glm::vec3(randomX, randomY -5.0f, randomZ));
-        planeModelMatrices[i] = glm::scale(glm::mat4(1.0f), glm::vec3(10.0f, 10.0f, 10.0f));
+        planeModelMatrices[i] = glm::translate(glm::mat4(1.0f), glm::vec3(randomX, explicitY, randomZ));
+        planeModelMatrices[i] = glm::scale(glm::mat4(1.0f), glm::vec3(100.0f, 100.0f, 100.0f));
     }
 
     // Sphere instances
@@ -119,31 +121,17 @@ void RenderData::Init() {
 
     // Wall Instances
     for (int i = 0; i < m_WallInstanceCount; i++) {
-        float x = 5.0f;
+        float y = 30.0f;
         float randomX = dis(gen);
         float randomY = dis(gen) + 5.0f;
         float randomZ = dis(gen);
-        wallModelMatricies[i] = glm::translate(glm::mat4(1.0f), glm::vec3(randomX , x , randomZ));
+        wallModelMatricies[i] = glm::translate(glm::mat4(1.0f), glm::vec3(randomX , y , randomZ));
 
     }
 
-    //// Print wall model matrices to console
-    //std::cout << "Wall Model Matrices:" << std::endl;
-    //for (int i = 0; i < m_WallInstanceCount; ++i) {
-    //    std::cout << "Instance " << i << ": ";
-    //    for (int j = 0; j < 4; ++j) {
-    //        std::cout << "["
-    //            << wallModelMatrices[i][j][0] << ", "
-    //            << wallModelMatrices[i][j][1] << ", "
-    //            << wallModelMatrices[i][j][2] << ", "
-    //            << wallModelMatrices[i][j][3] << "] ";
-    //    }
-    //    std::cout << std::endl;
-    //}
-
     // Set the model matrices for each mesh instance
     m_BoxMesh->SetInstanceModelMatrices(boxModelMatrices);
-    //m_PlaneMesh->SetInstanceModelMatrices(planeModelMatrices);
+    m_PlaneMesh->SetInstanceModelMatrices(planeModelMatrices);
     m_SphereMesh->SetInstanceModelMatrices(sphereModelMatrices);
     m_WallMesh->SetInstanceModelMatrices(wallModelMatricies);
 }
@@ -252,6 +240,11 @@ void RenderData::Render(Renderer& renderer, Camera& camera) {
     m_SkyboxShader->Bind();
     m_SkyboxShader->SetUniformMat4f("view", skyboxView);
     m_SkyboxShader->SetUniformMat4f("projection", projection);
+  
+
+    // Set uniforms in the shader
+    m_SkyboxShader->Bind(); // Make sure to bind the shader first
+   
     renderer.DrawSkybox(*m_SkyboxMesh, *m_SkyboxShader);
 
     // Bind the shader and set the view and projection matrices
@@ -267,7 +260,7 @@ void RenderData::Render(Renderer& renderer, Camera& camera) {
     // Bind the plane texture
     m_PlaneTexture->Bind();
     m_PlaneMesh->Bind();
-   // renderer.DrawInstanced({ m_PlaneMesh.get() }, *m_Shader, m_PlaneInstanceCount);  // Drawing the plane instances
+    renderer.DrawInstanced({ m_PlaneMesh.get() }, *m_Shader, m_PlaneInstanceCount);  // Drawing the plane instances
 
     // Render the sphere instances
     m_SphereTexture->Bind();
@@ -289,7 +282,6 @@ void RenderData::Render(Renderer& renderer, Camera& camera) {
     m_RobinTexture->Bind();
     m_WallMesh->Bind();
     renderer.DrawInstanced({ m_WallMesh.get() }, *m_WallShader, m_WallInstanceCount); // Draw robin
-
 
     // Unbind the shader
     m_Shader->Unbind();

@@ -13,8 +13,13 @@ public:
 
     void Bind() const;
     void Unbind() const;
-    void SetUniformMat4f(const std::string& name, const glm::mat4& matrix) const; // Add const here
-    void SetUniform3f(const std::string& name, float v0, float v1, float v2) const; // Added declaration
+
+    void SetUniformMat4f(const std::string& name, const glm::mat4& matrix) const;
+    void SetUniform3f(const std::string& name, float v0, float v1, float v2) const;
+
+    // New method declarations for setting vec3 and float uniforms
+    void setVec3(const std::string& name, const glm::vec3& value) const;
+    void setFloat(const std::string& name, float value) const;
 
     GLuint GetProgramID() const { return m_ProgramID; }
 
