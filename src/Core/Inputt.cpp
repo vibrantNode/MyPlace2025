@@ -43,6 +43,13 @@ void Input::ToggleFullscreen() {
     m_IsFullscreen = !m_IsFullscreen;  // Toggle the state
 }
 
+// Check if any movement keys are pressed (W, A, S, D)
+bool Input::IsAnyKeyPressed() {
+    return IsKeyPressed(GLFW_KEY_W) ||
+        IsKeyPressed(GLFW_KEY_A) ||
+        IsKeyPressed(GLFW_KEY_S) ||
+        IsKeyPressed(GLFW_KEY_D);
+}
 // Update the state of keys every frame
 void Input::Update() {
     for (auto& [key, wasPressed] : m_KeyPressed) {

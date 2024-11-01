@@ -5,10 +5,7 @@
 #include <memory>
 #include <glm/glm.hpp>
 
-struct Ray {
-    glm::vec3 origin;    // Starting point of the ray
-    glm::vec3 direction; // Direction of the ray
-};
+
 
 class Renderer {
 public:
@@ -23,8 +20,8 @@ public:
     void DrawInstanced(const std::vector<Mesh*>& meshes, const Shader& shader, unsigned int instanceCount) const;
     void MultiDrawIndirectCommand() {}
 
-    // Cast a ray along the Y-axis
-    Ray CastRayY(const glm::vec3& origin, float length) const;
+    void DrawModel(const std::vector<Mesh*>& mehses, const Shader& shader);
+  
 
 private:
     int instanceCount = 0;

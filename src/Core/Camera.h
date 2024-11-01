@@ -22,6 +22,8 @@ public:
     // Get the view matrix
     glm::mat4 GetViewMatrix() const;
 
+    void UpdateIdleMovement(float deltaTime); // Add this line
+
     // Get zoom (field of view)
     float GetZoom() const;
 
@@ -32,7 +34,11 @@ public:
  
     glm::vec3 GetPosition() const;
  
+    void Jump(float jumpHeight);
 
+    void TeleportDownward(float distance); // Moves the camera down
+
+    void TeleportInDirection(int direction);
 private:
 
     float m_LastX; // Last mouse x position

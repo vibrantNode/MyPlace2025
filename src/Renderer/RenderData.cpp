@@ -33,7 +33,7 @@ void RenderData::Init() {
     // Load textures
     m_BoxTexture = std::make_unique<Texture>("D:/Users/Admin/source/repos/MyHell2024/MyHell2024/res/Textures/stoneWall.jpg");
     m_PlaneTexture = std::make_unique<Texture>("D:/Users/Admin/source/repos/MyHell2024/MyHell2024/res/Textures/spaceFloor.jpg");
-    m_SphereTexture = std::make_unique<Texture>("D:/Users/Admin/source/repos/MyHell2024/MyHell2024/res/Textures/Robin1.jpg");
+    m_SphereTexture = std::make_unique<Texture>("D:/Users/Admin/source/repos/MyHell2024/MyHell2024/res/Textures/greenWall.jpg");
     m_RobinTexture = std::make_unique<Texture>("D:/Users/Admin/source/repos/MyHell2024/MyHell2024/res/Textures/mystical1.jpg");
 
 
@@ -121,13 +121,15 @@ void RenderData::Init() {
 
     // Wall Instances
     for (int i = 0; i < m_WallInstanceCount; i++) {
-        float y = 30.0f;
+        float y = -30.0f;
         float randomX = dis(gen);
         float randomY = dis(gen) + 5.0f;
         float randomZ = dis(gen);
         wallModelMatricies[i] = glm::translate(glm::mat4(1.0f), glm::vec3(randomX , y , randomZ));
 
     }
+
+    
 
     // Set the model matrices for each mesh instance
     m_BoxMesh->SetInstanceModelMatrices(boxModelMatrices);

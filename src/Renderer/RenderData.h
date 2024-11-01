@@ -33,7 +33,7 @@ public:
     void Init();
     void Update(float deltaTime);
     void Render(Renderer& renderer, Camera& camera);
-
+    void LoadModel(std::string& path);
     // Misc
 
    
@@ -59,7 +59,8 @@ private:
     std::unique_ptr<Mesh> m_SphereMesh;
     std::unique_ptr<Mesh> m_WallMesh;
     
-
+    // Models
+    std::vector<std::unique_ptr<Mesh>> m_Meshes;
 
     //Instances
     int m_PlaneInstanceCount = 1;
@@ -72,6 +73,8 @@ private:
     std::vector<glm::mat4> boxModelMatrices; // Declare as a member variable
     std::vector<glm::mat4> wallModelMatrices;
     std::vector<glm::vec3> wallPositions;
+
+
     
 
     float rotationSpeed = 60.0f; // Degrees per second
@@ -83,7 +86,6 @@ private:
 
     std::unique_ptr<Skybox> m_Skybox;
 
-    // Multi draw indirect stuff
  
 };
 

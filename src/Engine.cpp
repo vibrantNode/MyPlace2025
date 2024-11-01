@@ -26,7 +26,7 @@ Engine::Engine()
     m_Renderer = std::make_unique<Renderer>();
 
     // Initialize camera at some default position and orientation
-    m_Camera = std::make_unique<Camera>(glm::vec3(0.0f, 0.0f, 3.0f), -90.0f, 0.0f);
+    m_Camera = std::make_unique<Camera>(glm::vec3(0.0f, 3.0f, 3.0f), -90.0f, 0.0f);
 
     // Set the window for input management
     Input::SetGLFWWindow(m_Window->GetGLFWWindow());//------------------- **
@@ -82,25 +82,51 @@ void Engine::Run() {
     }
 }
 
-
 // Keyboard event listeners
 void Engine::ProcessInput(float deltaTime) {
-    if (Input::IsKeyPressed(GLFW_KEY_W))
+    if (Input::IsKeyPressed(GLFW_KEY_W)) {
         m_Camera->ProcessKeyboardInput(FORWARD, deltaTime);
-    if (Input::IsKeyPressed(GLFW_KEY_ENTER))
-        m_Camera->ProcessKeyboardInput(FORWARD, deltaTime);
-    if (Input::IsKeyPressed(GLFW_KEY_S))
+        if (Input::IsKeyPressed(GLFW_KEY_LEFT_SHIFT))
+            m_Camera->TeleportInDirection(FORWARD);
+    }
+    if (Input::IsKeyPressed(GLFW_KEY_S)) {
         m_Camera->ProcessKeyboardInput(BACKWARD, deltaTime);
-    if (Input::IsKeyPressed(GLFW_KEY_A))
+        if (Input::IsKeyPressed(GLFW_KEY_LEFT_SHIFT))
+            m_Camera->TeleportInDirection(BACKWARD);
+    }
+    if (Input::IsKeyPressed(GLFW_KEY_A)) {
         m_Camera->ProcessKeyboardInput(LEFT, deltaTime);
-    if (Input::IsKeyPressed(GLFW_KEY_D))
+        if (Input::IsKeyPressed(GLFW_KEY_LEFT_SHIFT))
+            m_Camera->TeleportInDirection(LEFT);
+    }
+    if (Input::IsKeyPressed(GLFW_KEY_D)) {
         m_Camera->ProcessKeyboardInput(RIGHT, deltaTime);
+        if (Input::IsKeyPressed(GLFW_KEY_LEFT_SHIFT))
+            m_Camera->TeleportInDirection(RIGHT);
+    }
+
     if (Input::IsKeyPressed(GLFW_KEY_ESCAPE))
         m_Running = false;
     if (Input::IsKeyPressed(GLFW_KEY_4))
         m_WireframeMode = !m_WireframeMode;
-}
+    // Check for jump (Space key)
+    if (Input::IsKeyPressed(GLFW_KEY_SPACE)) {
+        float jumpHeight = 0.20f;  // Define how high the jump should be
+        m_Camera->Jump(jumpHeight);
+    }
+    // Teleport down (Left Control key)
+    if (Input::IsKeyPressed(GLFW_KEY_LEFT_CONTROL)) {
+        float teleportDistance = 0.1081f;  // Define the downward distance
+        m_Camera->TeleportDownward(teleportDistance);
+    }
 
+    // Idle movement
+    if (!Input::IsAnyKeyPressed()) { // You might want to implement IsAnyKeyPressed to check for movement keys
+        m_Camera->UpdateIdleMovement(deltaTime);
+    }
+
+
+}
 
 
 // Mouse event listeners

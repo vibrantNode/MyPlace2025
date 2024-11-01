@@ -11,7 +11,7 @@ public:
     static void SetGLFWWindow(GLFWwindow* window);
     static void ToggleFullscreen();  // Fullscreen toggle logic
     static void Update(); // Update key states each frame
-
+    static bool IsAnyKeyPressed(); // New method to check if any keys are pressed
 private:
     static GLFWwindow* m_Window;
     static bool m_IsFullscreen;

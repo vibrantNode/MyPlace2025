@@ -2,6 +2,7 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
+#include <cmath> // For sin and cos functions
 
 // Constructor
 Camera::Camera(glm::vec3 position, float yaw, float pitch)
@@ -29,6 +30,24 @@ void Camera::ProcessMouseMovement(float xoffset, float yoffset, bool constrainPi
     UpdateCameraVectors();
 }
 
+
+// Function to update idle movement
+void Camera::UpdateIdleMovement(float deltaTime) {
+    static float elapsedTime = 0.0f;
+    elapsedTime += deltaTime;
+
+    // Subtle oscillation parameters
+    float amplitude = 0.1f; // Amplitude of the movement
+    float frequency = 1.0f; // Frequency of the oscillation
+
+    // Calculate oscillation
+    float offsetX = amplitude * sin(frequency * elapsedTime);
+    float offsetY = amplitude * cos(frequency * elapsedTime);
+
+    // Apply the oscillation to the camera position
+    m_Position.x += offsetX;
+    m_Position.y += offsetY;
+}
 // Keyboard input processing (with adjustable speed)
 void Camera::ProcessKeyboardInput(int direction, float deltaTime) {
     float velocity = m_MovementSpeed * deltaTime;  // Use movement speed
@@ -42,8 +61,30 @@ void Camera::ProcessKeyboardInput(int direction, float deltaTime) {
         m_Position += m_Right * velocity;
 }
 
+void Camera::Jump(float jumpHeight) {
+    m_Position.y += jumpHeight;  // Move up by jumpHeight units
+}
 
+void Camera::TeleportDownward(float distance) {
+    m_Position.y -= distance;  // Move down by the specified distance
+}
 
+void Camera::TeleportInDirection(int direction) {
+    const float teleportDistance = 0.40f; // Set teleport distance to 50 units
+
+    if (direction == FORWARD) {
+        m_Position += m_Front * teleportDistance;
+    }
+    else if (direction == BACKWARD) {
+        m_Position -= m_Front * teleportDistance;
+    }
+    else if (direction == LEFT) {
+        m_Position -= m_Right * teleportDistance;
+    }
+    else if (direction == RIGHT) {
+        m_Position += m_Right * teleportDistance;
+    }
+}
 // Update the camera vectors based on yaw and pitch
 void Camera::UpdateCameraVectors() {
     glm::vec3 front;
