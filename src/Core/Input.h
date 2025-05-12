@@ -1,5 +1,4 @@
-#ifndef INPUT_H
-#define INPUT_H
+#pragma once
 
 #include "GLFW/glfw3.h"
 #include <unordered_map>
@@ -22,4 +21,4 @@ private:
     static int m_WindowedPosX, m_WindowedPosY;
 };
 
-#endif
+ 

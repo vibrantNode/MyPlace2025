@@ -1,5 +1,4 @@
-#ifndef COMMON_H
-#define COMMON_H
+#pragma once
 
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
@@ -19,4 +18,4 @@ struct Transform {
     }
 };
 
-#endif // COMMON_H
+ 

@@ -16,17 +16,18 @@ public:
 	Engine();
 	~Engine();
 
+	void Init();
+
 	void Run();
-	std::unique_ptr<Mesh> m_Mesh;
-	std::unique_ptr<Shader> m_Shader;
 
 private:
 	void ProcessInput(float deltaTime);
 	static void MouseCallback(GLFWwindow* window, double xpos, double ypos);
 
-	std::unique_ptr<Window> m_Window;
-	std::unique_ptr<Renderer> m_Renderer;
-	std::unique_ptr<Camera> m_Camera;
+
+	Window m_Window;
+	Renderer m_Renderer;
+	Camera m_Camera;
 	
 	
 	bool m_Running;

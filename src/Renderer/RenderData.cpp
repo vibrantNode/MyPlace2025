@@ -18,23 +18,23 @@
 
 void RenderData::Init() {
    
-    // Change the following to stack allocation
+
     // Initialize shaders
     m_Shader = std::make_unique<Shader>(
-        "D:/Users/Admin/source/repos/MyHell2024/MyHell2024/res/Shaders/default.vert",
-        "D:/Users/Admin/source/repos/MyHell2024/MyHell2024/res/Shaders/default.frag"
+        "C:/Users/Admin/OneDrive/Desktop/_RealTimeRendering/MyPlace2025/res/Shaders/default.vert",
+        "C:/Users/Admin/OneDrive/Desktop/_RealTimeRendering/MyPlace2025/res/Shaders/default.frag"
     );
 
     m_WallShader = std::make_unique<Shader>(
-        "D:/Users/Admin/source/repos/MyHell2024/MyHell2024/res/Shaders/robin.vert",
-        "D:/Users/Admin/source/repos/MyHell2024/MyHell2024/res/Shaders/robin.frag"
+        "C:/Users/Admin/OneDrive/Desktop/_RealTimeRendering/MyPlace2025/res/Shaders/misc.vert",
+        "C:/Users/Admin/OneDrive/Desktop/_RealTimeRendering/MyPlace2025/res/Shaders/misc.frag"
     );
 
     // Load textures
-    m_BoxTexture = std::make_unique<Texture>("D:/Users/Admin/source/repos/MyHell2024/MyHell2024/res/Textures/stoneWall.jpg");
-    m_PlaneTexture = std::make_unique<Texture>("D:/Users/Admin/source/repos/MyHell2024/MyHell2024/res/Textures/spaceFloor.jpg");
-    m_SphereTexture = std::make_unique<Texture>("D:/Users/Admin/source/repos/MyHell2024/MyHell2024/res/Textures/greenWall.jpg");
-    m_RobinTexture = std::make_unique<Texture>("D:/Users/Admin/source/repos/MyHell2024/MyHell2024/res/Textures/mystical1.jpg");
+    m_BoxTexture = std::make_unique<Texture>("C:/Users/Admin/OneDrive/Desktop/_RealTimeRendering/MyPlace2025/res/Textures/stoneWall.jpg");
+    m_PlaneTexture = std::make_unique<Texture>("C:/Users/Admin/OneDrive/Desktop/_RealTimeRendering/MyPlace2025/res/Textures/spaceFloor.jpg");
+    m_SphereTexture = std::make_unique<Texture>("C:/Users/Admin/OneDrive/Desktop/_RealTimeRendering/MyPlace2025/res/Textures/greenWall.jpg");
+    m_Misc = std::make_unique<Texture>("C:/Users/Admin/OneDrive/Desktop/_RealTimeRendering/MyPlace2025/res/Textures/mystical1.jpg");
 
 
     // Skybox textures
@@ -61,20 +61,20 @@ void RenderData::Init() {
 
 
         // Space Skybox
-         "D:/Users/Admin/source/repos/MyHell2024/MyHell2024/res/Textures/SpaceSkybox/right.png",
-         "D:/Users/Admin/source/repos/MyHell2024/MyHell2024/res/Textures/SpaceSkybox/left.png",
-         "D:/Users/Admin/source/repos/MyHell2024/MyHell2024/res/Textures/SpaceSkybox/bot.png",
-         "D:/Users/Admin/source/repos/MyHell2024/MyHell2024/res/Textures/SpaceSkybox/top.png",
-         "D:/Users/Admin/source/repos/MyHell2024/MyHell2024/res/Textures/SpaceSkybox/front.png",
-         "D:/Users/Admin/source/repos/MyHell2024/MyHell2024/res/Textures/SpaceSkybox/back.png"
+         "C:/Users/Admin/OneDrive/Desktop/_RealTimeRendering/MyPlace2025/res/Textures/SpaceSkybox/right.png",
+         "C:/Users/Admin/OneDrive/Desktop/_RealTimeRendering/MyPlace2025/res/Textures/SpaceSkybox/left.png",
+         "C:/Users/Admin/OneDrive/Desktop/_RealTimeRendering/MyPlace2025/res/Textures/SpaceSkybox/bot.png",
+         "C:/Users/Admin/OneDrive/Desktop/_RealTimeRendering/MyPlace2025/res/Textures/SpaceSkybox/top.png",
+         "C:/Users/Admin/OneDrive/Desktop/_RealTimeRendering/MyPlace2025/res/Textures/SpaceSkybox/front.png",
+         "C:/Users/Admin/OneDrive/Desktop/_RealTimeRendering/MyPlace2025/res/Textures/SpaceSkybox/back.png"
     };
 
     m_Skybox = std::make_unique<Skybox>(facesCubemap);
 
     // Initialize skybox shader
     m_SkyboxShader = std::make_unique<Shader>(
-        "D:/Users/Admin/source/repos/MyHell2024/MyHell2024/res/Shaders/skybox.vert",
-        "D:/Users/Admin/source/repos/MyHell2024/MyHell2024/res/Shaders/skybox.frag"
+        "C:/Users/Admin/OneDrive/Desktop/_RealTimeRendering/MyPlace2025/res/Shaders/skybox.vert",
+        "C:/Users/Admin/OneDrive/Desktop/_RealTimeRendering/MyPlace2025/res/Shaders/skybox.frag"
     );
 
 
@@ -281,7 +281,7 @@ void RenderData::Render(Renderer& renderer, Camera& camera) {
 
     m_WallShader->SetUniform3f("cameraPos", cameraPosition.x, cameraPosition.y, cameraPosition.z);
 
-    m_RobinTexture->Bind();
+    m_Misc->Bind();
     m_WallMesh->Bind();
     renderer.DrawInstanced({ m_WallMesh.get() }, *m_WallShader, m_WallInstanceCount); // Draw robin
 

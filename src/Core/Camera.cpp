@@ -10,7 +10,6 @@ Camera::Camera(glm::vec3 position, float yaw, float pitch)
       m_Front(glm::vec3(0.0f, 0.0f, -1.0f)), 
       m_WorldUp(glm::vec3(0.0f, 1.0f, 0.0f)), 
       m_Zoom(75.0f), m_MovementSpeed(20.5f) {
-    UpdateCameraVectors();
 }
 
 // Mouse movement processing
@@ -31,23 +30,6 @@ void Camera::ProcessMouseMovement(float xoffset, float yoffset, bool constrainPi
 }
 
 
-// Function to update idle movement
-void Camera::UpdateIdleMovement(float deltaTime) {
-    static float elapsedTime = 0.0f;
-    elapsedTime += deltaTime;
-
-    // Subtle oscillation parameters
-    float amplitude = 0.1f; // Amplitude of the movement
-    float frequency = 1.0f; // Frequency of the oscillation
-
-    // Calculate oscillation
-    float offsetX = amplitude * sin(frequency * elapsedTime);
-    float offsetY = amplitude * cos(frequency * elapsedTime);
-
-    // Apply the oscillation to the camera position
-    m_Position.x += offsetX;
-    m_Position.y += offsetY;
-}
 // Keyboard input processing (with adjustable speed)
 void Camera::ProcessKeyboardInput(int direction, float deltaTime) {
     float velocity = m_MovementSpeed * deltaTime;  // Use movement speed
@@ -84,6 +66,24 @@ void Camera::TeleportInDirection(int direction) {
     else if (direction == RIGHT) {
         m_Position += m_Right * teleportDistance;
     }
+}
+
+// Function to update idle movement
+void Camera::UpdateIdleMovement(float deltaTime) {
+    static float elapsedTime = 0.0f;
+    elapsedTime += deltaTime;
+
+    // Subtle oscillation parameters
+    float amplitude = 0.1f; // Amplitude of the movement
+    float frequency = 1.0f; // Frequency of the oscillation
+
+    // Calculate oscillation
+    float offsetX = amplitude * sin(frequency * elapsedTime);
+    float offsetY = amplitude * cos(frequency * elapsedTime);
+
+    // Apply the oscillation to the camera position
+    m_Position.x += offsetX;
+    m_Position.y += offsetY;
 }
 // Update the camera vectors based on yaw and pitch
 void Camera::UpdateCameraVectors() {

@@ -22,6 +22,10 @@ public:
     // Get the view matrix
     glm::mat4 GetViewMatrix() const;
 
+
+    glm::vec3 GetPosition() const;
+
+
     void UpdateIdleMovement(float deltaTime); // Add this line
 
     // Get zoom (field of view)
@@ -31,8 +35,7 @@ public:
     void SetMovementSpeed(float speed);
 
     void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
- 
-    glm::vec3 GetPosition() const;
+
  
     void Jump(float jumpHeight);
 

@@ -15,29 +15,26 @@
 // Acting weird flag = :   ------------------- **
 
 
-// Engine init 
 Engine::Engine()
-    :m_Running(true) {
-   
-    // Initialize the GLFW window
-    m_Window = std::make_unique<Window>("My Universe", 1100, 600);
-
-    // Initialize the Renderer
-    m_Renderer = std::make_unique<Renderer>();
-
-    // Initialize camera at some default position and orientation
-    m_Camera = std::make_unique<Camera>(glm::vec3(0.0f, 3.0f, 3.0f), -90.0f, 0.0f);
-
+    : m_Running(true),
+    m_Window("My Universe", 1100, 600),
+    m_Camera(glm::vec3(0.0f, 3.0f, 3.0f), -90.0f, 0.0f)
+{
     // Set the window for input management
-    Input::SetGLFWWindow(m_Window->GetGLFWWindow());//------------------- **
+    Input::SetGLFWWindow(m_Window.GetGLFWWindow());
 
     // Set up mouse callback and user pointer
-    glfwSetWindowUserPointer(m_Window->GetGLFWWindow(), this);
-    glfwSetCursorPosCallback(m_Window->GetGLFWWindow(), MouseCallback);
-    glfwSetInputMode(m_Window->GetGLFWWindow(), GLFW_CURSOR, GLFW_CURSOR_DISABLED);  // Hide cursor
+    glfwSetWindowUserPointer(m_Window.GetGLFWWindow(), this);
+    glfwSetCursorPosCallback(m_Window.GetGLFWWindow(), MouseCallback);
+    glfwSetInputMode(m_Window.GetGLFWWindow(), GLFW_CURSOR, GLFW_CURSOR_DISABLED);  // Hide cursor
 
-    // Initialize the game
+  
+    // Initialize the game logic and scene data
     m_Game.Init();
+}
+
+void Engine::Init() {
+
 }
 
 // Destroy Game
@@ -53,7 +50,7 @@ void Engine::Run() {
     float lastFrame = 0.0f;
 
     // Main loop
-    while (m_Running && !m_Window->ShouldClose()) {
+    while (m_Running && !m_Window.ShouldClose()) {
         // Frame Logic
         float currentFrame = glfwGetTime();
         float deltaTime = currentFrame - lastFrame;
@@ -70,39 +67,39 @@ void Engine::Run() {
         }
 
         // Clear the screen
-        m_Renderer->Clear();
+        m_Renderer.Clear();
 
         // Update and render the game (and the current scene)
-        m_Game.Update(deltaTime, *m_Camera);
-        m_Game.Render(*m_Renderer, *m_Camera);
+        m_Game.Update(deltaTime, m_Camera);
+        m_Game.Render(m_Renderer, m_Camera);
        
         // Swap buffers and poll for events
-        m_Window->SwapBuffers();
-        m_Window->PollEvents();
+        m_Window.SwapBuffers();
+        m_Window.PollEvents();
     }
 }
 
 // Keyboard event listeners
 void Engine::ProcessInput(float deltaTime) {
     if (Input::IsKeyPressed(GLFW_KEY_W)) {
-        m_Camera->ProcessKeyboardInput(FORWARD, deltaTime);
+        m_Camera.ProcessKeyboardInput(FORWARD, deltaTime);
         if (Input::IsKeyPressed(GLFW_KEY_LEFT_SHIFT))
-            m_Camera->TeleportInDirection(FORWARD);
+            m_Camera.TeleportInDirection(FORWARD);
     }
     if (Input::IsKeyPressed(GLFW_KEY_S)) {
-        m_Camera->ProcessKeyboardInput(BACKWARD, deltaTime);
+        m_Camera.ProcessKeyboardInput(BACKWARD, deltaTime);
         if (Input::IsKeyPressed(GLFW_KEY_LEFT_SHIFT))
-            m_Camera->TeleportInDirection(BACKWARD);
+            m_Camera.TeleportInDirection(BACKWARD);
     }
     if (Input::IsKeyPressed(GLFW_KEY_A)) {
-        m_Camera->ProcessKeyboardInput(LEFT, deltaTime);
+        m_Camera.ProcessKeyboardInput(LEFT, deltaTime);
         if (Input::IsKeyPressed(GLFW_KEY_LEFT_SHIFT))
-            m_Camera->TeleportInDirection(LEFT);
+            m_Camera.TeleportInDirection(LEFT);
     }
     if (Input::IsKeyPressed(GLFW_KEY_D)) {
-        m_Camera->ProcessKeyboardInput(RIGHT, deltaTime);
+        m_Camera.ProcessKeyboardInput(RIGHT, deltaTime);
         if (Input::IsKeyPressed(GLFW_KEY_LEFT_SHIFT))
-            m_Camera->TeleportInDirection(RIGHT);
+            m_Camera.TeleportInDirection(RIGHT);
     }
 
     if (Input::IsKeyPressed(GLFW_KEY_ESCAPE))
@@ -112,17 +109,17 @@ void Engine::ProcessInput(float deltaTime) {
     // Check for jump (Space key)
     if (Input::IsKeyPressed(GLFW_KEY_SPACE)) {
         float jumpHeight = 0.20f;  // Define how high the jump should be
-        m_Camera->Jump(jumpHeight);
+        m_Camera.Jump(jumpHeight);
     }
     // Teleport down (Left Control key)
     if (Input::IsKeyPressed(GLFW_KEY_LEFT_CONTROL)) {
         float teleportDistance = 0.1081f;  // Define the downward distance
-        m_Camera->TeleportDownward(teleportDistance);
+        m_Camera.TeleportDownward(teleportDistance);
     }
 
     // Idle movement
     if (!Input::IsAnyKeyPressed()) { // You might want to implement IsAnyKeyPressed to check for movement keys
-        m_Camera->UpdateIdleMovement(deltaTime);
+       // m_Camera.UpdateIdleMovement(deltaTime);
     }
 
 
@@ -144,7 +141,7 @@ void Engine::MouseCallback(GLFWwindow* window, double xpos, double ypos) {
     engine->m_LastX = static_cast<float>(xpos);
     engine->m_LastY = static_cast<float>(ypos);
 
-    engine->m_Camera->ProcessMouseMovement(xoffset, yoffset);
+    engine->m_Camera.ProcessMouseMovement(xoffset, yoffset);
 }
 
 

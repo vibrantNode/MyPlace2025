@@ -1,8 +1,8 @@
 
-#pragma once  // Or use the traditional include guards below
+#pragma once 
 
 #include <string>
-#include <glad/glad.h>  // Ensure glad is included properly
+#include <glad/glad.h>  
 
 class Texture {
 public:

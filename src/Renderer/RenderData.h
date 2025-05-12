@@ -50,7 +50,7 @@ private:
     std::unique_ptr<Texture> m_BoxTexture;
     std::unique_ptr<Texture> m_Specular;
     std::unique_ptr<Texture> m_SphereTexture;
-    std::unique_ptr<Texture> m_RobinTexture;
+    std::unique_ptr<Texture> m_Misc;
 
     // Meshes
     std::unique_ptr<Mesh> m_BoxMesh;
